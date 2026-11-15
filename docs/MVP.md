@@ -31,9 +31,10 @@ All of this must work on mobile, pass the security checks, and leave no theme pl
 **Public site**
 - Theme converted to Blade: shared layout, header, off-canvas menu, page banner, footer, chat popup, back-to-top
 - Pages: Home, About, Services, Service details, Projects, Project details, Blog, Blog details, Contact, Terms, Privacy, 404
-- Home sections: Banner, Service cards, My Skill, Counter, Latest Portfolio, Testimonials, Blog and News, Get in Touch
-- About sections: intro, Education, Experiences, Counter, Testimonials, contact form
+- Home sections: Banner, Service cards, My Skill, Counter, Latest Portfolio, Supported Companies, Testimonials, Blog and News, Get in Touch
+- About sections: service cards, skill bars, Counter, Education, Experiences, Testimonials, contact form (the theme's About page has no intro block; the home banner covers ABT-1)
 - Contact form and chat popup saving to the inbox and emailing the owner
+- Blog comments: visitors comment on posts (one level of replies); every comment waits for the owner's approval
 - Basic SEO: slugs, meta title/description, Open Graph tags, sitemap
 
 **Admin panel (custom Bootstrap)**
@@ -42,8 +43,9 @@ All of this must work on mobile, pass the security checks, and leave no theme pl
 - Site Settings: identity, contact details, social links, footer text, SEO defaults
 - Profile & Hero
 - Section headings (eyebrow, title, subtitle, on/off) for the in-scope sections
-- CRUD: Services, Skills, Stats, Projects (+ categories, gallery), Posts (+ categories, tags), Testimonials, Resume entries, Legal pages
+- CRUD: Services, Skills, Stats, Projects (+ categories, gallery), Posts (+ categories, tags), Testimonials, Resume entries, Supported company logos, Legal pages
 - Messages inbox
+- Comments moderation: approve, unapprove, reply, delete; pending count in the sidebar; comments can be closed per post
 - Image upload with validation and resizing; rich-text editor with sanitizing; ordering and active toggles
 
 ### 2.2 Deferred to post-MVP
@@ -51,7 +53,6 @@ All of this must work on mobile, pass the security checks, and leave no theme pl
 | Feature | Reason for deferring |
 |---|---|
 | Price Plan section | Pricing intent still undecided (PRD open question 3); section hidden until then |
-| Supported Companies logos | Needs real client logos with permission; hidden until available |
 | Latest Service section (numbered list) | Duplicates service cards; can be added once services content exists |
 | Newsletter sign-up and CSV export | Footer field hidden for MVP; inbox covers enquiries |
 | Service categories sidebar | Can show a plain "Other services" list in MVP |
@@ -89,6 +90,12 @@ All of this must work on mobile, pass the security checks, and leave no theme pl
 - A valid message shows a success confirmation without leaving the page (and works without JavaScript).
 - More than 5 submissions per minute from one IP are blocked; honeypot submissions are silently discarded.
 
+**V-5 Comment on a post.** As a visitor, I can leave a comment on a post or reply to an existing comment.
+- Name, email and message are required; my email is never shown publicly.
+- After sending, I see that my comment will appear once it is approved; it is not shown until then.
+- Comments are plain text; the same spam protection as the contact form applies (honeypot, rate limit).
+- Posts with comments closed show existing approved comments but no form.
+
 ### Owner (Admin)
 
 **A-1 Secure access.** As the owner, only I can access the admin panel.
@@ -116,13 +123,19 @@ All of this must work on mobile, pass the security checks, and leave no theme pl
 **A-6 Inbox.** As the owner, I see every message in one place and get an email for each.
 - Messages show source (contact / chat), sender details, subject, message and date.
 - I can mark messages read/unread or replied, delete them, and click to reply by email.
+- I can reply from the inbox; the visitor receives my reply by email, and the inbox shows whether it was sent.
 - The dashboard shows the unread count and the latest 5 messages.
+
+**A-7 Comments.** As the owner, I decide which comments appear on my posts.
+- New comments wait in a moderation queue; the sidebar shows how many are pending.
+- I can approve, unapprove, reply (my reply appears straight away, marked as the author) and delete (replies go with their comment).
+- I can close comments on a single post.
 
 ---
 
 ## 4. MVP database tables
 
-`users`, `settings`, `sections`, `stats`, `services`, `skills`, `project_categories`, `projects`, `project_images`, `post_categories`, `tags`, `post_tag`, `posts`, `testimonials`, `resume_entries`, `pages`, `messages`, plus Laravel's `password_reset_tokens`, `sessions`, `cache` and `jobs`. Field details are in PRD §6. `pricing_plans`, `clients`, `service_categories` and `subscribers` are created post-MVP.
+`users`, `settings`, `sections`, `stats`, `services`, `skills`, `skill_bars`, `project_categories`, `projects`, `project_images`, `post_categories`, `tags`, `post_tag`, `posts`, `comments`, `testimonials`, `resume_entries`, `clients`, `pages`, `messages`, plus Laravel's `password_reset_tokens`, `sessions`, `cache` and `jobs`. Field details are in PRD §6. `pricing_plans`, `service_categories` and `subscribers` are created post-MVP. (Built ahead of plan on request: `latest_services`.)
 
 ---
 
@@ -130,12 +143,12 @@ All of this must work on mobile, pass the security checks, and leave no theme pl
 
 | Milestone | Deliverables | Exit check |
 |---|---|---|
-| **M0 Setup** | Laravel 13 on XAMPP, MySQL database, `.env`, Git repo, Mailpit for local email, theme assets copied to `public/assets` | App loads at localhost; theme CSS/JS load without console errors |
-| **M1 Theme to Blade (static)** | `layouts/app.blade.php`; partials for header, off-canvas, banner, footer, chat popup; one component per section; all in-scope pages rendering with demo content; `custom.css`/`custom.js` for overrides | Every page matches the screenshots on desktop and mobile; sliders, counters and menus still work |
+| **M0 Setup** | Laravel 13 on XAMPP, MySQL database, `.env`, Git repo, Mailpit for local email, theme assets copied to `public/frontend/assets` | App loads at localhost; theme CSS/JS load without console errors |
+| **M1 Theme to Blade (static)** | `layouts/frontend.blade.php`; partials for header, off-canvas, banner, footer, chat popup; one component per section; all in-scope pages rendering with demo content; `custom.css`/`custom.js` for overrides | Every page matches the screenshots on desktop and mobile; sliders, counters and menus still work |
 | **M2 Admin foundation** | Admin login (Breeze or hand-built), registration disabled, Bootstrap admin layout, dashboard shell, change password/reset, `EnsureAdmin` middleware, rate limiting | Only the owner reaches `/admin`; tests for access pass |
 | **M3 Settings, profile and sections** | `settings` and `sections` tables with seeders, settings service with caching, admin forms, header/footer/banner/contact page wired to settings | Changing contact details in admin updates every public location |
 | **M4 Simple collections** | Stats, Skills, Testimonials, Resume entries, Services (with detail page): migrations, models, factories, admin CRUD (`/generate-crud`), public sections wired up | All home and about sections except portfolio and blog are live data |
-| **M5 Projects and blog** | Projects with categories and gallery; posts with categories and tags; rich-text editor + HTML sanitizer; image upload service; list and detail pages; slugs; draft/published | Owner publishes a project and a post and sees them on home, list and detail pages |
+| **M5 Projects and blog** | Projects with categories and gallery; posts with categories and tags; moderated blog comments; rich-text editor + HTML sanitizer; image upload service; list and detail pages; slugs; draft/published | Owner publishes a project and a post and sees them on home, list and detail pages |
 | **M6 Forms and inbox** | Contact and chat forms (AJAX + fallback), honeypot, throttling, `messages` table, owner email notification (queued), admin inbox | Both forms reach the inbox and email; spam protection tests pass |
 | **M7 SEO, polish and launch prep** | Meta and OG tags, sitemap and robots.txt, legal pages, themed 404/500, image lazy-loading, caching review, Lighthouse pass, real content entered, README | Definition of done (§7) met; test-writer and security-reviewer passes clean |
 
@@ -143,8 +156,8 @@ All of this must work on mobile, pass the security checks, and leave no theme pl
 
 ## 6. Key technical decisions
 
-- **Theme integration.** Copy the theme's `assets/` folder to `public/assets` and load it with `asset()`; keep the theme's own jQuery plugins as they are. Overrides go in `custom.css`/`custom.js` only, so the theme can be updated without merge pain.
-- **Blade structure.** `layouts/app.blade.php` + `partials/` (header, footer, offcanvas, page-banner, chat-popup) + `components/sections/` (banner, skills, counter, portfolio, testimonials, blog, contact, education, experience) + small UI components (section-heading, project-card, post-card).
+- **Theme integration.** Copy the theme's `assets/` folder to `public/frontend/assets` and load it with `asset()`; keep the theme's own jQuery plugins as they are. Overrides go in `custom.css`/`custom.js` only, so the theme can be updated without merge pain.
+- **Blade structure.** `layouts/frontend.blade.php` + `frontend/partials/` (header, footer, offcanvas, page-banner, chat-popup) + `components/sections/` (banner, skills, counter, portfolio, testimonials, blog, contact, education, experience) + small UI components (section-heading, project-card, post-card).
 - **Admin.** Separate `layouts/admin.blade.php` using a free Bootstrap admin template; routes grouped under `/admin` with `auth` + `EnsureAdmin` middleware; resource controllers, Form Requests and Policies, generated with `/generate-crud`.
 - **Settings.** `settings` table (key + JSON value) behind a `Settings` service with `Cache::rememberForever()`; cache cleared by model events on save. Shared to all views with a View Composer.
 - **Sections.** `sections` table keyed like `home.skills`; each section component reads its heading and visibility from it.
@@ -188,7 +201,7 @@ All of this must work on mobile, pass the security checks, and leave no theme pl
 ## 9. Open questions to settle before M3
 
 1. Confirm the custom Bootstrap admin panel (no Filament).
-2. Rename "Appointment Now" to "Send Message"?
+2. ~~Rename "Appointment Now" to "Send Message"?~~ Yes (2026-11-02).
 3. Keep Skills and Services as separate content, or merge?
 4. Which sections should launch hidden: Price Plan and Supported Companies (assumed), anything else?
 5. Is the chat popup's "Online" label kept, removed or made editable?

@@ -1,0 +1,204 @@
+/*
+    Admin education page: section settings in a slim card, entries on a vertical timeline.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+/* ---------- Settings ---------- */
+.ed-settings-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 18px;
+    padding: 20px 24px;
+    background: #fff;
+    border: 1px solid #e0e6ed;
+    border-radius: 18px;
+}
+
+.ed-settings-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    color: #805dca;
+    border-radius: 14px;
+    background: rgba(128, 93, 202, 0.12);
+}
+
+.ed-settings-icon svg {
+    width: 26px;
+    height: 26px;
+}
+
+.ed-settings-field {
+    flex: 1;
+    min-width: 220px;
+}
+
+.ed-settings-field label {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.ed-settings-switch {
+    margin-bottom: 10px;
+}
+
+.ed-settings .form-save-bar {
+    margin-top: 12px;
+}
+
+/* ---------- Timeline ---------- */
+.ed-timeline-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+    margin: 12px 0 18px;
+}
+
+.ed-timeline-head h4 {
+    margin: 0;
+    font-weight: 700;
+}
+
+.ed-timeline-head span {
+    font-size: 13px;
+    color: #888ea8;
+}
+
+.ed-timeline {
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 34px;
+    list-style: none;
+}
+
+.ed-timeline::before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 11px;
+    width: 2px;
+    background: linear-gradient(180deg, #805dca, rgba(128, 93, 202, 0.15));
+}
+
+.ed-node {
+    position: relative;
+    margin-bottom: 18px;
+}
+
+.ed-dot {
+    position: absolute;
+    top: 22px;
+    left: -29px;
+    width: 14px;
+    height: 14px;
+    border: 3px solid #805dca;
+    border-radius: 50%;
+    background: #fff;
+}
+
+.ed-card {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 18px 20px;
+    background: #fff;
+    border: 1px solid #e0e6ed;
+    border-radius: 16px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.ed-card:hover {
+    border-color: #805dca;
+    box-shadow: 0 8px 24px rgba(128, 93, 202, 0.12);
+}
+
+.ed-card-main {
+    min-width: 0;
+}
+
+.ed-period {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 3px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #805dca;
+    border-radius: 999px;
+    background: rgba(128, 93, 202, 0.12);
+}
+
+.ed-card h5 {
+    margin: 0 0 2px;
+    font-weight: 700;
+}
+
+.ed-org {
+    margin: 0 0 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #515365;
+}
+
+.ed-desc {
+    margin: 0;
+    font-size: 13px;
+    color: #888ea8;
+}
+
+.ed-node.is-hidden-on-site .ed-card {
+    border-style: dashed;
+    opacity: 0.7;
+}
+
+.ed-node.is-hidden-on-site .ed-dot {
+    border-color: #e2a03f;
+}
+
+.ed-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: #888ea8;
+    border: 2px dashed #e0e6ed;
+    border-radius: 18px;
+}
+
+/* Dark mode (Cork toggles .dark on body) */
+body.dark .ed-settings-card,
+body.dark .ed-card {
+    background: #0e1726;
+    border-color: #1b2e4b;
+}
+
+body.dark .ed-card:hover {
+    border-color: #805dca;
+}
+
+body.dark .ed-dot {
+    background: #0e1726;
+}
+
+body.dark .ed-timeline-head h4,
+body.dark .ed-card h5,
+body.dark .ed-settings-field label {
+    color: #e0e6ed;
+}
+
+body.dark .ed-org {
+    color: #bfc9d4;
+}
+
+body.dark .ed-empty {
+    border-color: #1b2e4b;
+}
+
+@media (max-width: 575.98px) {
+    .ed-card {
+        flex-direction: column;
+    }
+}

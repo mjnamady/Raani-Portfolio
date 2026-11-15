@@ -1,0 +1,52 @@
+/*
+    Shared styles for admin content editors (banner, services area, ...).
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+.admin-form-card {
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 18px;
+    margin-bottom: 24px;
+}
+
+.admin-form-card h5 {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.admin-form-card .card-subtitle {
+    font-size: 13px;
+    color: #888ea8;
+    margin-bottom: 24px;
+}
+
+.admin-form-card label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.admin-form-card .form-text {
+    font-size: 12px;
+}
+
+.char-count {
+    float: right;
+    font-size: 11px;
+    color: #888ea8;
+}
+
+.char-count.is-near-limit {
+    color: #e2a03f;
+}
+
+/* Dark mode (Cork toggles .dark on body) */
+body.dark .admin-form-card {
+    background-color: #0e1726;
+}
+
+body.dark .admin-form-card label,
+body.dark .admin-form-card h5 {
+    color: #e0e6ed;
+}

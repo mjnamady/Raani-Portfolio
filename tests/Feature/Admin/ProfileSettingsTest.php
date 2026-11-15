@@ -301,7 +301,7 @@ test('the Breeze profile update and delete routes are rate limited', function (s
 
 test('changing the password signs out other sessions but keeps the current one', function () {
     // Session B: an earlier session whose stored password hash predates the change.
-    $this->actingAs($this->admin)->get(route('admin.dashboard'))->assertOk();
+    $this->actingAs($this->admin)->get(route('admin.banner'))->assertOk();
     $sessionBHash = session('password_hash_web');
     expect($sessionBHash)->not->toBeNull();
 
@@ -313,13 +313,13 @@ test('changing the password signs out other sessions but keeps the current one',
     ])->assertSessionHasNoErrors();
 
     // Session A keeps working.
-    $this->actingAs($this->admin->fresh())->get(route('admin.dashboard'))->assertOk();
+    $this->actingAs($this->admin->fresh())->get(route('admin.banner'))->assertOk();
 
     // Session B is logged out on its next request.
     $this->flushSession();
     $this->withSession(['password_hash_web' => $sessionBHash])
         ->actingAs($this->admin->fresh())
-        ->get(route('admin.dashboard'))
+        ->get(route('admin.banner'))
         ->assertRedirect(route('login'));
 
     $this->assertGuest();
@@ -367,10 +367,10 @@ test('a failed save keeps the old image and removes the new upload', function ()
         ->and(Storage::disk('public')->allFiles())->toBe([$oldPath]);
 });
 
-test('images larger than 4000 pixels are rejected', function () {
+test('images larger than the source dimension cap are rejected', function () {
     $this->actingAs($this->admin)
         ->patch(route('admin.profile.settings.update'), profilePayload([
-            'profile_image' => UploadedFile::fake()->image('huge.jpg', 4001, 200),
+            'profile_image' => UploadedFile::fake()->image('huge.jpg', ImageUploadService::MAX_SOURCE_DIMENSION + 1, 200),
         ]))
         ->assertSessionHasErrors('profile_image');
 });

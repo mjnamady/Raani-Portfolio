@@ -1,0 +1,140 @@
+/*
+    Admin Contact page: a "business card" board. Each card starts with a dark preview styled
+    like the public contact card, followed by its fields; then the "Get in touch" panel.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+:root {
+    --cp-accent: #ff014f;
+    --cp-card: #fff;
+    --cp-border: #e0e6ed;
+    --cp-muted: #888ea8;
+    --cp-text: #0e1726;
+    --cp-preview: #141416;
+}
+
+body.dark {
+    --cp-card: #0e1726;
+    --cp-border: #1b2e4b;
+    --cp-text: #e0e6ed;
+}
+
+.cp-intro,
+.cp-touch-head {
+    margin-bottom: 16px;
+}
+
+.cp-intro h5,
+.cp-touch-head h5 {
+    margin-bottom: 4px;
+    font-weight: 700;
+    color: var(--cp-text);
+}
+
+.cp-intro p,
+.cp-touch-head p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--cp-muted);
+}
+
+/* ---------- Cards ---------- */
+.cp-card {
+    height: 100%;
+    overflow: hidden;
+    background: var(--cp-card);
+    border: 1px solid var(--cp-border);
+    border-radius: 18px;
+    transition: border-color 0.2s ease;
+}
+
+.cp-card:focus-within {
+    border-color: var(--cp-accent);
+}
+
+.cp-card.has-error {
+    border-color: #e7515a;
+}
+
+.cp-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-height: 196px;
+    padding: 26px 18px 22px;
+    text-align: center;
+    color: #fff;
+    background: var(--cp-preview);
+}
+
+.cp-card.is-empty .cp-preview {
+    opacity: 0.6;
+}
+
+.cp-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    margin-bottom: 8px;
+    color: var(--cp-accent);
+    background: rgba(255, 1, 79, 0.12);
+    border-radius: 50%;
+}
+
+.cp-preview-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.cp-preview-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    word-break: break-word;
+}
+
+.cp-preview-empty {
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1b1b20;
+    background: #e2a03f;
+    border-radius: 999px;
+}
+
+.cp-fields {
+    padding: 18px 20px 22px;
+}
+
+.cp-fields label,
+.cp-touch label {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.cp-error {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #e7515a;
+}
+
+/* ---------- Get in touch ---------- */
+.cp-touch {
+    margin-top: 24px;
+    padding: 22px;
+    background: var(--cp-card);
+    border: 1px solid var(--cp-border);
+    border-left: 4px solid var(--cp-accent);
+    border-radius: 16px;
+}
+
+.cp-touch + .form-save-bar {
+    margin-top: 16px;
+}

@@ -1,0 +1,237 @@
+/*
+    Admin Comments: a moderation queue. Pending comments carry an amber edge, approved ones green,
+    the owner's own replies the accent colour. Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+:root {
+    --cm-accent: #ff014f;
+    --cm-card: #fff;
+    --cm-border: #e0e6ed;
+    --cm-muted: #888ea8;
+    --cm-text: #0e1726;
+    --cm-soft: #f4f5f7;
+    --cm-pending: #e2a03f;
+    --cm-approved: #00ab55;
+}
+
+body.dark {
+    --cm-card: #0e1726;
+    --cm-border: #1b2e4b;
+    --cm-text: #e0e6ed;
+    --cm-soft: #1b2e4b;
+}
+
+.cm-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.cm-tabs {
+    display: inline-flex;
+    padding: 4px;
+    background: var(--cm-card);
+    border: 1px solid var(--cm-border);
+    border-radius: 12px;
+}
+
+.cm-tabs a {
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cm-muted);
+    border-radius: 9px;
+}
+
+.cm-tabs a span {
+    margin-left: 4px;
+    padding: 1px 7px;
+    font-size: 11px;
+    background: var(--cm-soft);
+    border-radius: 999px;
+}
+
+.cm-tabs a.has-pending span {
+    color: #fff;
+    background: var(--cm-pending);
+}
+
+.cm-tabs a.is-active {
+    color: #fff;
+    background: var(--cm-text);
+}
+
+body.dark .cm-tabs a.is-active {
+    color: #0e1726;
+}
+
+.cm-filter {
+    font-size: 13px;
+    color: var(--cm-muted);
+}
+
+.cm-filter strong {
+    color: var(--cm-text);
+}
+
+.cm-filter a {
+    margin-left: 8px;
+}
+
+.cm-queue {
+    display: grid;
+    gap: 14px;
+}
+
+.cm-card {
+    display: flex;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--cm-card);
+    border: 1px solid var(--cm-border);
+    border-left: 4px solid var(--cm-pending);
+    border-radius: 14px;
+}
+
+.cm-card.is-approved {
+    border-left-color: var(--cm-approved);
+}
+
+.cm-card.is-owner {
+    border-left-color: var(--cm-accent);
+}
+
+.cm-avatar {
+    display: inline-flex;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--cm-accent);
+    background: rgba(255, 1, 79, 0.1);
+    border-radius: 50%;
+}
+
+.cm-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.cm-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.cm-meta strong {
+    color: var(--cm-text);
+}
+
+.cm-email {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.cm-badge {
+    padding: 1px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 999px;
+}
+
+.cm-badge-pending {
+    color: #1b1b20;
+    background: var(--cm-pending);
+}
+
+.cm-badge-approved {
+    color: #fff;
+    background: var(--cm-approved);
+}
+
+.cm-badge-owner {
+    color: #fff;
+    background: var(--cm-accent);
+}
+
+.cm-context {
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--cm-muted);
+}
+
+.cm-body {
+    margin: 10px 0 12px;
+    color: var(--cm-text);
+    /* Plain text: keep the visitor's line breaks without printing any HTML. */
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+}
+
+.cm-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.cm-actions form {
+    margin: 0;
+}
+
+.cm-reply {
+    margin-top: 12px;
+    padding: 12px;
+    background: var(--cm-soft);
+    border-radius: 10px;
+}
+
+.cm-reply-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.cm-reply-foot small {
+    color: var(--cm-muted);
+}
+
+.cm-empty {
+    padding: 50px 20px;
+    text-align: center;
+    color: var(--cm-muted);
+    background: var(--cm-card);
+    border: 1px dashed var(--cm-border);
+    border-radius: 14px;
+}
+
+.cm-empty span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: #fff;
+    background: var(--cm-approved);
+    border-radius: 50%;
+}
+
+.cm-empty p {
+    margin: 0;
+}
+
+@media (max-width: 575px) {
+    .cm-card {
+        flex-direction: column;
+    }
+}

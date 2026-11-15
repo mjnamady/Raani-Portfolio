@@ -1,0 +1,397 @@
+/*
+    Admin banner section page: a live miniature of the banner above a tabbed editor.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+/* ---------- Live stage ---------- */
+.bn-stage {
+    position: relative;
+    padding: 20px 28px 28px;
+    margin-bottom: 24px;
+    color: #fff;
+    border-radius: 22px;
+    background:
+        radial-gradient(circle at 50% 120%, rgba(255, 1, 79, 0.28), transparent 55%),
+        linear-gradient(160deg, #18181d 0%, #0a0a0d 100%);
+    overflow: hidden;
+    transition: filter 0.2s;
+}
+
+.bn-stage.is-off {
+    filter: grayscale(1);
+}
+
+.bn-stage-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.bn-stage-tag {
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+}
+
+.bn-visibility {
+    padding: 6px 14px 6px 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+}
+
+.bn-visibility .form-check {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.bn-visibility .form-check-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.bn-stage-title {
+    margin: 0 0 22px;
+    font-size: clamp(22px, 2.6vw, 34px);
+    font-weight: 700;
+    line-height: 1.25;
+    color: #fff;
+}
+
+.bn-stage-title [data-show="role"] {
+    color: #ff014f;
+}
+
+.bn-stage-grid {
+    display: grid;
+    grid-template-columns: 1fr minmax(160px, 220px) 1.3fr;
+    gap: 24px;
+    align-items: center;
+}
+
+.bn-stage-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.bn-stage-stats li {
+    padding-left: 12px;
+    border-left: 2px solid #ff014f;
+}
+
+.bn-stage-stats li.is-empty {
+    display: none;
+}
+
+.bn-stage-stats strong {
+    display: block;
+    font-size: 24px;
+    line-height: 1.1;
+}
+
+.bn-stage-stats span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.bn-stage-portrait {
+    position: relative;
+    aspect-ratio: 640 / 808;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px solid transparent;
+}
+
+.bn-stage-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.bn-stage-portrait.is-new {
+    border-color: #4361ee;
+}
+
+.bn-new-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: none;
+}
+
+.bn-stage-portrait.is-new .bn-new-badge {
+    display: inline-block;
+}
+
+.bn-stage-info h6 {
+    margin: 0 0 4px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.bn-stage-info p {
+    margin: 0 0 12px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.65);
+    overflow-wrap: anywhere;
+}
+
+.bn-stage-info p[data-show="address"],
+.bn-stage-info p[data-show="email"],
+.bn-stage-info p[data-show="phone"] {
+    margin-bottom: 2px;
+}
+
+.bn-stage [data-show]:empty {
+    display: none;
+}
+
+.bn-stage .is-placeholder {
+    opacity: 0.35;
+    font-style: italic;
+}
+
+.bn-stage-off-note {
+    display: none;
+    margin-top: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #e2a03f;
+}
+
+.bn-stage.is-off .bn-stage-off-note {
+    display: block;
+}
+
+/* ---------- Tabbed editor ---------- */
+.bn-editor {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.bn-tabs {
+    gap: 6px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #e0e6ed;
+    border-radius: 18px;
+}
+
+.bn-tab {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-radius: 12px;
+    color: #515365;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.bn-tab:hover {
+    background: rgba(67, 97, 238, 0.06);
+}
+
+.bn-tab.active {
+    background: #4361ee;
+    color: #fff;
+}
+
+.bn-tab-step {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 50%;
+    background: rgba(67, 97, 238, 0.12);
+    color: #4361ee;
+}
+
+.bn-tab.active .bn-tab-step {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+
+.bn-tab-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.bn-tab-text strong {
+    font-size: 14px;
+}
+
+.bn-tab-text small {
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+.bn-tab-error {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #e7515a;
+    box-shadow: 0 0 0 3px rgba(231, 81, 90, 0.25);
+}
+
+.bn-panes {
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #e0e6ed;
+    border-radius: 18px;
+}
+
+.bn-panes h5 {
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.bn-pane-subtitle {
+    margin-bottom: 22px;
+    font-size: 13px;
+    color: #888ea8;
+}
+
+.bn-panes label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* Counter rows: one compact line each */
+.bn-stat-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid #e0e6ed;
+}
+
+.bn-stat-row:last-child {
+    border-bottom: 0;
+}
+
+.bn-stat-index {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin-top: 26px;
+    font-weight: 700;
+    border-radius: 10px;
+    background: rgba(255, 1, 79, 0.1);
+    color: #ff014f;
+}
+
+.bn-stat-fields {
+    display: grid;
+    flex: 1;
+    grid-template-columns: 130px 90px 1fr;
+    gap: 12px;
+}
+
+/* Dark mode (Cork toggles .dark on body) */
+body.dark .bn-tabs,
+body.dark .bn-panes {
+    background: #0e1726;
+    border-color: #1b2e4b;
+}
+
+body.dark .bn-tab {
+    color: #bfc9d4;
+}
+
+body.dark .bn-tab.active {
+    color: #fff;
+}
+
+body.dark .bn-panes h5,
+body.dark .bn-panes label {
+    color: #e0e6ed;
+}
+
+body.dark .bn-stat-row {
+    border-color: #1b2e4b;
+}
+
+@media (max-width: 991.98px) {
+    .bn-editor {
+        grid-template-columns: 1fr;
+    }
+
+    .bn-tabs {
+        flex-direction: row !important;
+        overflow-x: auto;
+    }
+
+    .bn-tab {
+        width: auto;
+        flex-shrink: 0;
+    }
+
+    .bn-tab-text small {
+        display: none;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .bn-stage-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .bn-stage-portrait {
+        grid-row: 1;
+        grid-column: 1 / -1;
+        max-width: 200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .bn-stat-fields {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .bn-stat-label {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bn-stage,
+    .bn-tab {
+        transition: none;
+    }
+}

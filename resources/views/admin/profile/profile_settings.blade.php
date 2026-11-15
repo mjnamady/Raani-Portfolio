@@ -27,7 +27,7 @@
 
                         <nav class="breadcrumb-style-one" aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('admin.banner') }}">Dashboard</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">Profile Settings</li>
                             </ol>
                         </nav>
@@ -98,13 +98,6 @@
 
         <div class="col-xl-12 col-lg-12 col-md-12">
 
-            @if (session('status'))
-                <div class="alert alert-light-success alert-dismissible fade show mb-4" role="alert">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    {{ session('status') }}
-                </div>
-            @endif
-
             <div class="profile-content-area">
 
                 <div class="tab-content" id="nav-tabContent">
@@ -112,7 +105,7 @@
                     <!-- ===================== PROFILE TAB ===================== -->
                     <div class="tab-pane fade {{ $passwordTabActive ? '' : 'show active' }}" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
 
-                        <form method="POST" action="{{ route('admin.profile.settings.update') }}" enctype="multipart/form-data" novalidate>
+                        <form method="POST" action="{{ route('admin.profile.settings.update') }}" enctype="multipart/form-data" novalidate data-track-changes>
                             @csrf
                             @method('PATCH')
 
@@ -202,7 +195,7 @@
                                             <div class="col-md-6 mb-4">
                                                 <label for="profile_current_password">Current password</label>
                                                 <div class="form-action-password">
-                                                    <input type="password" class="form-control @error('current_password') is-invalid @enderror" id="profile_current_password" name="current_password" autocomplete="current-password">
+                                                    <input type="password" class="form-control @error('current_password') is-invalid @enderror" id="profile_current_password" name="current_password" autocomplete="current-password" data-track-ignore>
                                                     <button type="button" class="form-password-toggle" data-target="profile_current_password" aria-label="Show password">
                                                         @include('admin.profile.partials.eye-icons')
                                                     </button>
@@ -214,14 +207,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="text-end">
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
-                                        </div>
-
                                     </div>
                                 </div>
 
                             </div>
+
+                            @include('admin.layout.components.save_bar', ['label' => 'Save changes'])
                         </form>
 
                     </div>
@@ -236,14 +227,14 @@
                                     <h5>Change password</h5>
                                     <p class="card-subtitle">Enter your current password, then choose a new one.</p>
 
-                                    <form method="POST" action="{{ route('admin.profile.password.update') }}" novalidate>
+                                    <form method="POST" action="{{ route('admin.profile.password.update') }}" novalidate data-track-changes>
                                         @csrf
                                         @method('PUT')
 
                                         <div class="mb-4">
                                             <label for="current_password">Current password</label>
                                             <div class="form-action-password">
-                                                <input type="password" class="form-control @error('current_password', 'updatePassword') is-invalid @enderror" id="current_password" name="current_password" required autocomplete="current-password">
+                                                <input type="password" class="form-control @error('current_password', 'updatePassword') is-invalid @enderror" id="current_password" name="current_password" required autocomplete="current-password" data-track-ignore>
                                                 <button type="button" class="form-password-toggle" data-target="current_password" aria-label="Show password">
                                                     @include('admin.profile.partials.eye-icons')
                                                 </button>
@@ -286,9 +277,7 @@
                                             <div id="password-match-hint" class="form-text"></div>
                                         </div>
 
-                                        <div class="text-end">
-                                            <button type="submit" class="btn btn-primary">Update password</button>
-                                        </div>
+                                        @include('admin.layout.components.save_bar', ['label' => 'Update password'])
                                     </form>
 
                                 </div>

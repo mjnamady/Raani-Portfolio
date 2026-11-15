@@ -18,6 +18,6 @@ Create:
 8. **Public wiring:** update the matching Blade section component or page (`resources/views/components/sections/…`) to loop over `Model::active()->ordered()` (or `published()`) data, keeping the theme's exact markup and classes. Escape all plain text with `{{ }}`; only sanitized rich text may use `{!! !!}`. Add detail routes (`/…/{slug}`) using published-only route model binding if the type has detail pages, and add it to the sitemap.
 9. **Cache:** clear the related cache keys on save, delete, reorder and toggle (model events or an observer).
 
-Never edit theme files in `public/assets`; put any styling changes in `custom.css`.
+Never edit theme files in `public/frontend/assets` or `public/backend/src`; put any styling changes in `custom.css` (public) or `public/backend/custom/` (admin).
 
 Then hand over to **/write-test** for the new type and run `php artisan test`. Finish with the list of files created or changed and any decisions for the owner.

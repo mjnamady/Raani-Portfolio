@@ -1,0 +1,359 @@
+/*
+    Admin Testimonials: a "quote wall" of dark cards that mirrors the public slider, a wide
+    section-title strip with the huge outlined word, and a testimonial form with a live preview.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+:root {
+    --tm-accent: #ff014f;
+    --tm-card: #fff;
+    --tm-border: #e0e6ed;
+    --tm-muted: #888ea8;
+    --tm-text: #0e1726;
+    --tm-dark: #141417;
+}
+
+body.dark {
+    --tm-card: #0e1726;
+    --tm-border: #1b2e4b;
+    --tm-text: #e0e6ed;
+}
+
+.tm-subtitle {
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--tm-muted);
+}
+
+.tm-optional {
+    font-weight: 400;
+    color: var(--tm-muted);
+}
+
+/* ---------- Section title strip ---------- */
+.tm-settings {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    background: var(--tm-card);
+    border: 1px solid var(--tm-border);
+    border-radius: 18px;
+}
+
+.tm-settings-preview {
+    display: flex;
+    flex: 1 1 320px;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    padding: 20px;
+    overflow: hidden;
+    background: #0b0b0d;
+}
+
+.tm-settings-preview span {
+    max-width: 100%;
+    overflow: hidden;
+    font-size: clamp(44px, 7vw, 84px);
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.35);
+}
+
+.tm-settings-fields {
+    flex: 1 1 380px;
+    padding: 22px;
+}
+
+.tm-settings-fields h5 {
+    margin-bottom: 4px;
+    font-weight: 700;
+    color: var(--tm-text);
+}
+
+.tm-settings-fields label:not(.form-check-label),
+.tm-form-card label:not(.form-check-label) {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+}
+
+.tm-settings ~ .form-save-bar {
+    margin-top: 12px;
+}
+
+/* ---------- Quote wall ---------- */
+.tm-wall-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+    margin: 32px 0 14px;
+}
+
+.tm-wall-head h4 {
+    margin: 0;
+    font-weight: 700;
+    color: var(--tm-text);
+}
+
+.tm-wall-head span {
+    font-size: 13px;
+    color: var(--tm-muted);
+}
+
+.tm-head-add {
+    margin-left: auto;
+}
+
+.tm-wall {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.tm-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
+    padding: 24px;
+    color: #fff;
+    background: var(--tm-dark);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.tm-card:hover {
+    border-color: rgba(255, 1, 79, 0.45);
+}
+
+.tm-card.is-hidden-on-site {
+    opacity: 0.5;
+}
+
+.tm-card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tm-quote-mark {
+    font-family: Georgia, serif;
+    font-size: 64px;
+    line-height: 0.6;
+    height: 30px;
+    color: var(--tm-accent);
+}
+
+.tm-position {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.tm-badge-hidden {
+    padding: 2px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1b1b20;
+    background: #e2a03f;
+    border-radius: 999px;
+}
+
+.tm-quote {
+    flex: 1;
+    margin: 16px 0 18px;
+    padding: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    border: 0;
+    overflow-wrap: anywhere;
+}
+
+.tm-card-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tm-person strong {
+    display: block;
+    font-size: 16px;
+    color: #fff;
+}
+
+.tm-person span {
+    font-size: 13px;
+    color: var(--tm-accent);
+}
+
+.tm-actions {
+    display: flex;
+    gap: 2px;
+}
+
+.tm-actions form {
+    margin: 0;
+}
+
+.tm-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.65);
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+}
+
+.tm-action:hover:not(:disabled) {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.tm-action:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.tm-action svg {
+    width: 16px;
+    height: 16px;
+}
+
+.tm-delete:hover:not(:disabled) {
+    background: #e7515a;
+}
+
+/* Add tile */
+.tm-add-card {
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    color: var(--tm-muted);
+    background: transparent;
+    border: 2px dashed var(--tm-border);
+}
+
+.tm-add-card:hover,
+.tm-add-card:focus-visible {
+    color: var(--tm-accent);
+    background: rgba(255, 1, 79, 0.05);
+    border-color: var(--tm-accent);
+}
+
+.tm-add-plus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--tm-accent);
+    background: rgba(255, 1, 79, 0.12);
+    border-radius: 50%;
+}
+
+.tm-add-card strong {
+    font-size: 16px;
+    color: var(--tm-text);
+}
+
+.tm-add-card small {
+    max-width: 240px;
+}
+
+/* ---------- Form ---------- */
+.tm-form-card {
+    height: 100%;
+    padding: 22px;
+    background: var(--tm-card);
+    border: 1px solid var(--tm-border);
+    border-radius: 18px;
+}
+
+.tm-form-card h5 {
+    margin-bottom: 4px;
+    font-weight: 700;
+    color: var(--tm-text);
+}
+
+.tm-preview-wrap {
+    position: relative;
+    height: 100%;
+    padding: 40px 28px 22px;
+    background: #0b0b0d;
+    border-radius: 18px;
+}
+
+.tm-preview-tag {
+    position: absolute;
+    top: 14px;
+    left: 18px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.tm-preview-card {
+    padding: 30px;
+    background: var(--tm-dark);
+    border-radius: 20px;
+}
+
+.tm-preview-icon {
+    width: 44px;
+    margin-bottom: 18px;
+}
+
+.tm-preview-quote {
+    margin-bottom: 22px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #fff;
+    overflow-wrap: anywhere;
+}
+
+.tm-preview-card h3 {
+    margin: 0 0 4px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    overflow-wrap: anywhere;
+}
+
+.tm-preview-role {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.tm-preview-card .is-placeholder {
+    opacity: 0.4;
+}
+
+.tm-preview-note {
+    margin: 14px 0 0;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}

@@ -1,22 +1,22 @@
 # Progress Tracker: Reeni Portfolio MVP
 
-Current milestone: **M2 Admin foundation** (M0 still open: Git, Mailpit, theme console check)
+Current milestone: **M2 complete** → next M3 (M0: only the theme console check is open; M1 not started)
 
 Each item counts as done only when it is built, tested, and security-reviewed.
 
 ## M0 Setup
-- [ ] Laravel 13 project running on XAMPP (PHP 8.3+)
-- [ ] MySQL database + separate test database
-- [ ] Git repository initialised
-- [ ] Mailpit running for local email
-- [ ] Theme assets copied to `public/assets`, loading without console errors
+- [x] Laravel 13 project running on Laragon (PHP 8.3+)
+- [x] MySQL database + separate test database (SQLite in-memory, guarded in `tests/TestCase.php`)
+- [x] Git repository initialised (Laragon's bundled Git; first commit pending git identity)
+- [x] Mailpit running for local email (Laragon's bundled Mailpit 1.22.3; test email received; `.env` MAIL_* to be pointed at 127.0.0.1:1025 by the owner)
+- [ ] Theme assets copied to `public/frontend/assets`, loading without console errors (2026-10-24: all 51 home-page assets return 200 and every style.css url() resolves; browser console check still open)
 
 ## M1 Theme to Blade (static)
-- [ ] `layouts/app.blade.php`
+- [x] `layouts/frontend.blade.php`
 - [ ] Partials: header, off-canvas menu, page banner, footer, chat popup
 - [ ] Section components (banner, service cards, skills, counter, portfolio, testimonials, blog, contact, education, experience)
 - [ ] Pages: Home, About, Services, Service details, Projects, Project details, Blog, Blog details, Contact, 404
-- [ ] `custom.css` / `custom.js` for overrides
+- [x] `custom.css` / `custom.js` for overrides (in `public/frontend/custom/`)
 - [ ] Exit check: all pages match screenshots on desktop and mobile; sliders, counters and menus work
 
 ## M2 Admin foundation
@@ -28,34 +28,35 @@ Each item counts as done only when it is built, tested, and security-reviewed.
 - [x] Exit check: only the owner reaches `/admin`; access tests pass
 
 ## M3 Settings, profile and sections
-- [ ] `settings` table, seeder, cached Settings service, View Composer
-- [ ] `sections` table and seeder (eyebrow, title, subtitle, on/off)
-- [ ] Admin forms: Site Settings, Profile & Hero, Sections
-- [ ] Header, off-canvas, banner, contact page and footer read from settings
-- [ ] Exit check: changing contact details in admin updates every public location
+- [x] `settings` table, seeder, cached Settings service, View Composer (`site`, `social`, `offcanvas`, `footer`, `contact` groups)
+- [x] `sections` table and seeder (eyebrow, title, subtitle, on/off) (built 2026-10-24, seeded by each section's seeder)
+- [x] Admin forms: Site Settings, Profile & Hero (= Banner admin), Sections (headings on each section's admin page)
+- [x] Header, off-canvas, banner, contact page and footer read from settings
+- [x] Exit check: changing contact details in admin updates every public location (2026-11-05: `SiteWideSettingsTest`; security review clean after fixes)
 
 ## M4 Simple collections
 - [ ] Stats
-- [ ] Skills
-- [ ] Testimonials
+- [x] Skills
+- [x] Testimonials
 - [ ] Resume entries (education + experience)
 - [ ] Services + service detail page
 - [ ] Exit check: all home and about sections except portfolio and blog use live data
 
 ## M5 Projects and blog
-- [ ] Image upload service (validate, resize, random name, remove old file)
-- [ ] Rich-text editor + HTML sanitizer
-- [ ] Project categories + projects + gallery + list and detail pages
-- [ ] Post categories + tags + posts + list and detail pages
-- [ ] Draft/published with `published()` scope
-- [ ] Exit check: a published project and post appear on home, list and detail pages; drafts never appear
+- [x] Image upload service (validate, resize, random name, remove old file)
+- [x] Rich-text editor + HTML sanitizer
+- [x] Project categories + projects + gallery + list and detail pages
+- [x] Post categories + tags + posts + list and detail pages
+- [x] Draft/published with `published()` scope
+- [x] Blog comments with moderation (BLG-9, added 2026-10-28)
+- [x] Exit check: a published project and post appear on home, list and detail pages; drafts never appear (2026-11-04: covered by tests; security review clean)
 
 ## M6 Forms and inbox
-- [ ] `messages` table
-- [ ] Contact form + chat popup (AJAX + no-JS fallback)
-- [ ] Honeypot + throttling
-- [ ] Queued owner email notification
-- [ ] Admin inbox (read/unread, replied, delete) + dashboard counts
+- [ ] `messages` table (2026-11-05: built and tested; awaiting security review)
+- [ ] Contact form + chat popup (AJAX + no-JS fallback) (2026-11-05: contact, project and chat forms built and tested; awaiting security review)
+- [ ] Honeypot + throttling (2026-11-05: built and tested; awaiting security review)
+- [ ] Queued owner email notification (2026-11-05: built and tested; needs `queue:work` running; awaiting security review)
+- [ ] Admin inbox (read/unread, replied, delete) + dashboard counts (2026-11-05: inbox and dashboard built and tested; awaiting fixes from the M6 review)
 - [ ] Exit check: both forms reach the inbox and email; spam protection tests pass
 
 ## M7 SEO, polish and launch prep
@@ -70,6 +71,21 @@ Each item counts as done only when it is built, tested, and security-reviewed.
 
 ## Decisions
 <!-- Record answers to open questions here, e.g. "2026-10-21: Admin panel = custom Bootstrap (no Filament)" -->
+- 2026-10-24: Public theme stays in `public/frontend/assets` (docs updated to match); admin theme in `public/backend`
+- 2026-10-24: Public layout is `layouts/frontend.blade.php`; Breeze's `layouts/app.blade.php` and its /admin/profile page are kept as they are
+- 2026-10-24: Latest Service section (HOME-3) built on request although MVP §2.2 lists it as deferred
+- 2026-10-25: Rich text = Quill 2 (npm, bundled by Vite, admin only) + mews/purifier "rich_text" allow-list; packages approved and installed
+- 2026-10-25: Projects public URLs will be `/projects` and `/projects/{slug}` (`/all/projects` redirects); category tabs become server-side filter links with pagination; home shows up to 4 featured projects, falling back to the latest; built in two steps (admin first, then public views)
+- 2026-10-24: Supported Companies moved into MVP scope (MVP §2.1/§4 updated); logos are PNG/WebP/JPG only, no SVG uploads; links open in a new tab with rel="noopener nofollow"
+- 2026-10-24: XAMPP php.ini stays at upload_max_filesize=2M; admin image uploads follow the server's real limit automatically (`UploadLimit`)
+- 2026-10-27: Testimonials have no photo or rating for now (the theme card shows neither; TST-1 fields deferred, columns can be added later with a new migration); no fake extra slides when fewer than 4; slider pause control deferred to the M7 polish pass
+- 2026-10-27: Blog: post body is text-only rich text (headings, lists, links, quotes; no inline images yet, MVP A-4 note to be proposed); publish dates can be back-dated but not set in the future (scheduling stays deferred); blog sidebar search removed and tags shown as plain labels (search/tag pages deferred); one editable author per post, prefilled with the Banner name; one featured-image upload is cropped to 1700x880 (post page) and 820x588 (cards); built in two steps (admin first, then public pages)
+- 2026-10-28: Blog comments moved into MVP scope (PRD BLG-9, MVP V-5/A-7; PRD open question 6 answered): every comment waits for approval; one level of replies from visitors and the owner; owner email notification comes with M6 (sidebar pending badge until then); initials avatars, no Gravatar; per-post "Allow comments" switch, on by default
+- 2026-11-02: About page: reuses the service cards, Counter, Education/Experience and Testimonials (one on/off switch per section, shared with the home page); new skill bars (PRD ABT-5, `skill_bars`); no intro block (theme has none; home banner covers ABT-1, MVP note added); price plan removed until pricing is in scope; "Appointment Now" renamed "Send Message" (PRD question 2); contact form stays inert until M6 but no longer posts to the theme vendor's mailer
+- 2026-11-05: Contact page: contact details live in the new `settings` table (`contact` group, up to 2 lines per card); the banner keeps its own address/email/phone until the rest of M3 moves the banner, header, off-canvas and footer to the settings; "Get in touch" text is edited on the admin Contact Page (moved from the About admin) and shared by both pages; the form stays inert until M6, with a "coming soon" note instead of the raw error
+- 2026-11-05: M3 site settings: contact details stay on the Contact Page admin (Site Settings and Banner admin link there); banner `address`/`email`/`phone` columns dropped by a new migration after copying to the contact settings; social networks = Instagram, LinkedIn, X, Facebook, GitHub, Dribbble, Behance, YouTube (https only, empty hidden; X uses the theme's bird icon, the theme's Font Awesome has no X logo); mobile Services dropdown hidden until the services pages exist; two optional logos (dark and light mode); footer Terms/Privacy hidden until M7, "Contact Us" → /contact; newsletter field hidden (MVP §2.2); favicon uploads stored as 64×64 WebP
+- 2026-11-05: M6 inbox: owner emails go to the admin account email(s), with the visitor as Reply-To (SMTP from `.env`, sent through the database queue); project-page messages use source "project" and link the project; chat popup wired in the same step and its "– Online" label removed (MVP question 5); visitor IP/User-Agent cleared after 90 days by a daily scheduled command (server needs `schedule:run` in cron); dashboard (ADM-2) built as the next step; message min length 10, max 5000
+- 2026-11-05: Replies from the inbox in scope (PRD ADM-3 and MVP A-6 updated): emailed to the visitor from the site name + MAIL_FROM, Reply-To the admin's email, original message quoted; kept in a thread with sending/sent/failed + retry; at most 30 replies an hour; all emails retried 5 times (15 s, 1 min, 5 min, 15 min) because Mailtrap's free plan rejects bursts; inbox warns when emails wait for the queue worker; CON-5 (automatic acknowledgement) stays deferred
 
 ## Log
 <!-- One dated line per completed step, e.g. "2026-10-22: M2 admin login done (ADM-1, ADM-8); tests pass; security review clean" -->
@@ -78,3 +94,39 @@ Each item counts as done only when it is built, tested, and security-reviewed.
 - 2026-10-22: M2 admin profile settings (DB-driven profile, `profile_image` column, GD image upload service with live preview, change password with strong rules + throttle), TestCase guard against cached config wiping the dev DB (ADM-5, ADM-8); tests 101/101 pass; security review clean (0 Critical/High, 3 Medium + 5 Low open)
 - 2026-10-22: Incident: a test run with cached config wiped the dev MySQL DB; admin re-seeded from .env; guard added in tests/TestCase.php
 - 2026-10-22: M2 security fixes: removed Breeze `PUT /password`, `account-security` rate limit on profile/password routes, `auth.session` signs out other sessions on password change, GD errors → validation error, image deleted only after save, 4000px cap + memory check, TestCase guard checks the resolved DB connection + `force="true"` in phpunit.xml (ADM-1, ADM-5, ADM-8); tests 112/112 pass. M2 exit check met.
+- 2026-10-22: M0 Git repo initialised (`.gitignore` now excludes all `.env.*` except `.env.example`), Mailpit started and verified with a test email
+- 2026-10-23: Ahead of order: home Banner admin (`banner_sections` table, portrait upload, up to 3 banner stats in `stats`), Services Area admin (featured service cards, Font Awesome icon allow-list), home page Blade with section partials under `resources/views/frontend/` (theme served from `public/frontend/assets`) (HOME-1, HOME-2, STAT-1 banner)
+- 2026-10-24: Banner + Services Area tests 73/73 pass; security review clean (0 Critical/High, 4 Low open: L1 services editor accepts non-featured ids, L2 removing a card hard-deletes the service / empty submit deletes all, L3 no throttle on admin write routes, L4 no Policies; fix L1+L2 before M4 Services CRUD)
+- 2026-10-24: Admin toast notifications (shared partial + admin-toasts.js) replace inline status alerts; tests pass; security review not yet
+- 2026-10-24: Ahead of order: Counter Area admin (`/admin/counter`): highlight stat + up to 4 counter cards in `stats` (placements `highlight`, `counter`), on/off via new `sections` table (`home.counter`), cached home partial (HOME-5, STAT-1 counter/highlight); tests 171/171 admin pass; security review not yet
+- 2026-10-24: Deferred feature built on request: Latest Service Area admin (`/admin/latest-services`): heading + side image on `sections` (`home.latest_services`, new `image`/`image_alt` columns), up to 3 numbered items in new `latest_services` table, cached home partial (HOME-3); tests 206/206 admin pass; security review not yet
+- 2026-10-24: Admin UX: shared unsaved-changes tracker (`admin-form-tracker.js` + `save_bar` partial) on every admin form; distinct designs for Banner (live stage + tabs), Services Area (card board), Counter Area (scoreboard), Latest Service (in-place editor); tests 213/213 admin pass; security review not yet
+- 2026-10-24: Security review of toasts, Counter Area, Latest Service Area, form tracker and redesigned pages: clean (0 Critical/High/Medium; Low: no trustHosts, third-party admin assets + no security headers; fixed now: relative Discard link, tracker never stores typed passwords)
+- 2026-10-24: Services Area L1 + L2 fixed: ids scoped to featured services, removing a card un-features it instead of deleting, a request without `services` is rejected (editor always sends it); tests 217/217 admin pass
+- 2026-10-24: M1 shared public layout `layouts/frontend.blade.php` (head, header, footer, chat popup + back-to-top partials, scripts, `@yield` title/meta/body class, style/script stacks); home page extends it; `public/frontend/custom/custom.css|js` added; static markup only, no new inputs or output of user data; full suite 274/274 pass
+- 2026-10-24: M4 Resume entries built (ahead of M1): `resume_entries` table, `ResumeEntry` model + `ResumeEntryPolicy` (first Policy), shared `ResumeEntryController` with Education/Experience controllers, CRUD + show/hide + move at `/admin/education` and `/admin/experience`, section title/visibility (+ experience photo) on `sections`, sidebar submenu wired, cached home partial (ABT-2, ABT-3, ADM-4); full suite 336/336 pass; security review not yet
+- 2026-10-24: Fix: image uploads above PHP's upload_max_filesize (2M) were silently dropped; `App\Support\UploadLimit` caps validation, hints and client checks at the real limit on Banner, Latest Service and Experience, with a clear message when PHP drops a file (ADM-5); admin tests 286/286 pass
+- 2026-10-24: Fix: phone photos over 4000px were rejected before reaching Intervention Image; source cap raised to 12000px (`ImageUploadService::MAX_SOURCE_DIMENSION`, shared rule + message on all four uploads), memory limit raised to 512M per request while decoding, bomb guard kept (ADM-5); full suite 346/346 pass
+- 2026-10-24: Supported Companies built: `clients` table, `Client` model + `ClientPolicy`, `ClientController` CRUD + show/hide + move at `/admin/clients`, section on/off, logos scaled down without cropping via new `ImageUploadService::storeFitted()` (Intervention `scaleDown`), http(s)-only links, theme demo logos seeded and never deleted (HOME-8, CLT-1, ADM-4); full suite 388/388 pass; security review not yet
+- 2026-10-25: M5 Projects step 1 (admin): `project_categories`, `projects`, `project_images`, `tags`, `project_tag`; `published()` scope; Quill editor + purifier sanitizing (on save and in the model); card/cover/gallery images via `ImageUploadService`; projects board, two-column editor with gallery manager, categories page; policies, form requests, scoped gallery bindings; demo seeder (PRJ-1, PRJ-2, PRJ-5, ADM-4, ADM-6, ADM-7, SEO-5); full suite 452/452 pass; security review not yet. Public views = step 2
+- 2026-10-26: Admin "+ New project" tile on the board and "Add Project" sidebar link (adding was hidden behind a small header button)
+- 2026-10-26: M5 Projects step 2 (public): home "Latest Portfolio" from featured published projects (My Skill moved to its own partial), `/projects` with category filter links + pagination, new `frontend/pages/project_details.blade.php` (sanitized content, features, gallery slider, sidebar, previous/next), drafts/scheduled/unknown = 404, `/all/projects` 301 → `/projects`; `pages_temp` loads main.js once and now loads custom.css/js (HOME-6, PRJ-2, PRJ-3, PRJ-4, SEO-1, V-2); full suite 480/480 pass
+- 2026-10-26: Security review of Projects step 1, Education/Experience, upload fixes and Supported Companies: clean (0 Critical/High/Medium). Fixed: array input crashes, DB-size overflows (content bytes, tag slug length, publish date before 2038), rich-text links limited to target=_blank. Fix: project editor card/cover images were previewed but never uploaded (the error-clearing step emptied the file input). Open Lows/Info: EXIF-rotated huge images can exceed the memory estimate (fatal, orphan files); home cache doesn't refresh by itself when a future publish date passes; orphan tags never pruned
+- 2026-10-27: M4 Skills: `skills` table, `Skill` model + `SkillPolicy`, `SkillController` CRUD + show/hide + move + highlight at `/admin/skills` (exactly one visible skill highlighted, passed on when hidden or deleted), section eyebrow/title/on-off on `sections` (`home.skills`), icon picker with Font Awesome allow-list, live preview; public `my_skill` partial dynamic without the Read More links (HOME-4, SKL-1, SKL-2, A-5); full suite 520/520 pass; security review not yet
+- 2026-10-27: Security review of Skills + Projects public pages: 0 Critical/High/Medium, 2 Low open (L1 `?category[]=` 500 on /projects, L2 empty Font Awesome list cached forever)
+- 2026-10-27: M4 Testimonials: `testimonials` table, `Testimonial` model + `TestimonialPolicy`, `TestimonialController` CRUD + show/hide + move at `/admin/testimonials` ("quote wall" with add tile, live-preview form), big title + on/off on `sections` (`home.testimonials`); public `testimonial` partial dynamic, hidden when off or empty (HOME-9, TST-1, A-5); 31 tests, full suite 551/551 pass; security review not yet
+- 2026-10-27: M5 Blog step 1 (admin): `post_categories`, `posts`, `post_tag` (shared `tags`), `Post`/`PostCategory` models + policies, `PostController` (status tabs, 20 per page, publish toggle, featured image in two crops, tags) and `PostCategoryController` at `/admin/posts` and `/admin/post-categories`, home section heading on `sections` (`home.blog`), seeders with 6 demo posts (BLG-1, BLG-2, ADM-4, ADM-5, ADM-6, ADM-7, A-5); 45 tests, full suite 596/596 pass; public pages are step 2
+- 2026-10-28: M5 Blog step 2 (public): `/blog` (9 per page, category filter links, `is_string` guard on `?category`) and `/blog/{slug}` (published only, previous/next, sidebar: categories with counts, recent posts, About Me from the Banner, tags as labels; comments/search/share removed), home "Blog and News" dynamic (latest 3, heading from `home.blog`), header Blog + Projects links point to the real pages in both menus, post-body styles in `custom.css` (BLG-3, BLG-5, HOME-10, V-3, SEO-1); 18 tests, full suite 614/614 pass; security review not yet
+- 2026-10-28: M5 Blog comments: PRD/MVP updated (BLG-9, V-5, A-7); `comments` table + `posts.allow_comments`; public form on posts (`POST /blog/{post:slug}/comments`, honeypot, `comments` rate limit 3/min + 20/day per IP with a friendly message, 404 for posts that are not live), approved comments in the theme markup with one level of replies, initials avatars and an "Author" badge; admin moderation queue at `/admin/comments` (Pending/Approved/All, post filter, approve, unapprove, reply, delete) with a pending badge in the sidebar; comment counts and "Allow comments" switch on posts; demo comments seeded (BLG-9, CON-4); 35 tests, full suite 649/649 pass; security review not yet
+- 2026-11-02: About page dynamic: `/about` reuses the service, counter, education/experience and testimonial partials (optional spacing per page), skill bar columns from `skill_bars` + `sections` (`about.skills_design`, `about.skills_development`), "Get in touch" text from `sections` (`contact.get_in_touch`); admin "About Page" at `/admin/about` (column titles/on-off, inline add/edit/hide/reorder/delete bars with live meter, get-in-touch text, links to the reused sections); vendor mailer URL and inversweb.com breadcrumb link removed; mobile About link fixed; seeder (ABT-2, ABT-3, ABT-4, ABT-5, A-5); 34 tests, full suite 683/683 pass; security review not yet
+- 2026-11-04: Security review of blog (admin + public), comments, Testimonials and About page: 0 Critical, 1 High outside them (/contact form still posted to the theme vendor's mailer), 9 Low
+- 2026-11-04: Security fixes: /contact form inert (`action="#"`) and breadcrumb fixed (High); arrays sent where text is expected are no longer flashed back as old input, so no form page crashes after validation (global, `FlashableInput`); `/projects` and admin projects `?category[]=` guarded (old L1); comments strip invisible/control characters, reject invalid UTF-8 and `? & # %` in emails, User-Agent scrubbed, admin mailto link encoded; comment limit keyed by IPv6 /64 plus 100/hour site-wide; category and service slugs capped to their columns; `throttle:admin-writes` (60/min per admin, writes only) on the admin group (old L3); full suite 697/697 pass. Still open: demo `public/frontend/*.html` pages (awaiting delete OK); no security headers/CSP, no trustHosts, footer "© InversWeb" (M7); About/Contact forms show the 405 page as text until M6; cache cleared before commit (stale-content race); comment count includes hidden replies; IP/User-Agent retention (privacy page, M7); production: trusted proxies, APP_DEBUG=false
+- 2026-11-05: Contact page dynamic: `settings` table + `Setting` model (cached), `ContactDetails` support class; `/contact` cards (address, email, phone) from the `contact` settings with per-address mailto and cleaned tel links, empty cards hidden; shared `get_in_touch` partial + view composer on About and Contact (custom.js "opens soon" note, nothing posted); admin "Contact Page" at `/admin/contact` (card board with live previews, get-in-touch text; moved off the About admin); `ContactSettingsSeeder` copies the banner details (GEN-2 contact group, HOME-11, A-5); 25 new tests, full suite 722/722 pass; security review not yet
+- 2026-11-05: Security review of Contact page + settings layer: 0 Critical/High; fixed: settings/sections caches cleared after commit (`DB::afterCommit`), contact values type-checked on read, mailto links encoded, seeder no longer copies unvalidated banner data, project details form caught by the "opens soon" note, new `ValidUtf8` rule on contact and site settings text; still open: demo `public/frontend/*.html` pages (Medium, awaiting delete OK); full suite 728/728 pass
+- 2026-11-05: M3 site settings: Site Settings admin at `/admin/settings` (tabs Identity, Social links, Menu panel, Footer with live previews; logo, light logo, favicon and panel photo uploads with theme fallbacks and "use the theme image" reset; footer quick links add/reorder/clear), `SiteSettings` support class; header, menu panel, mobile menu, footer, banner contact block, page `<title>`/description/favicon all from the settings (server-side copyright, inline script removed, dead theme links fixed); banner contact columns dropped (data copied first); page titles on About/Contact/Blog/Projects/posts/projects (GEN-1, GEN-2, GEN-3, GEN-5, GEN-6, GEN-7 defaults, A-2); 50 new tests incl. the M3 exit check, full suite 778/778 pass; security review not yet
+- 2026-11-05: M3 security review: 0 Critical/High, 4 Low fixed: settings type-checked and limited to known keys (computed values always win), only `settings/<uuid>.webp` paths shown or deleted (failed deletes logged), banner migration copies only valid values and clears caches (down() restores first lines), plus `Cache::memo()` for settings, invisible-character stripping (`InvisibleCharacters`), host-based external quick links; M3 ticked; full suite 791/791 pass
+- 2026-11-05: M6 forms and inbox: `messages` table + `Message` model/policy; `POST /messages` (contact, project, chat) with Form Request, honeypot, `throttle:messages` (5/min + 30/day per visitor, IPv6 /64, 100/hour site-wide), JSON answers for JavaScript (custom.js inline errors and success) and server-rendered errors/thank-you without it; shared `contact_form` partial (About, Contact, project pages) and one `chat_popup` partial for both layouts; queued `NewMessageMail` to the admin(s) with Reply-To; admin inbox at `/admin/messages` (two-pane list + reader, status/source filters, read/unread/replied/delete, encoded reply link, sidebar unread badge); `messages:forget-visitor-data` scheduled daily (CON-1, CON-2, CON-3, CON-4, ADM-3, V-4, A-6); 48 new tests, full suite 839/839 pass; security review not yet
+- 2026-11-05: Emails not arriving: no queue worker was running (4 notifications waiting, delivered to Mailtrap once the worker ran; 3 first hit Mailtrap's free-plan rate limit). Replies from the inbox: `message_replies` table + `MessageReply` model, `SendMessageReply` job (recipient always the message's stored address, records sent/failed), `MessageReplyMail`, reply box + thread with status and retry, `throttle:message-replies`; retries with backoff on all emails; "emails are waiting" banner (ADM-3, A-6); 22 new tests, full suite 861/861 pass; security review not yet
+- 2026-11-05: Admin dashboard at `/admin` (ADM-2): live counts (unread messages, pending comments, published projects/posts with drafts, active services), latest 5 messages, email health (waiting emails, failed replies), quick links; sign-in now lands on the dashboard; 8 new tests, full suite 869/869 pass
+- 2026-11-05: M6 security review: 0 Critical/High; Medium: demo `public/frontend/*.html` still posting to the vendor (awaiting delete OK), site-wide 100/hour cap lets an attacker close the forms; 5 Low (SMTP details in stored errors + failed_jobs never pruned, possible double reply, IPv4-mapped IPv6 bucket, phishing via replies to spoofed addresses, Reply-To display-name spoofing); fixes awaiting approval
+- 2026-11-05: Bug fix: real messages were silently discarded because browsers/password managers autofilled the honeypot field (named `website`, labelled "Website"); server answered "Thanks" but saved nothing (11 attempts reached the server today, none saved after 18:23). Honeypot renamed to `hp_leave_empty` ("Leave this field empty", password-manager ignore attributes) on the contact form, chat popup and blog comments; every honeypot drop is now logged (form only, no personal data); regression tests added; full suite 872/872 pass

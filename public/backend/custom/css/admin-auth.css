@@ -1,0 +1,455 @@
+/*
+    Admin sign-in pages, styled with the Cork admin palette.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+:root {
+    --auth-primary: #4361ee;
+    --auth-primary-dark: #3451d1;
+    --auth-secondary: #805dca;
+    --auth-bg: #f1f2f3;
+    --auth-card: #ffffff;
+    --auth-text: #3b3f5c;
+    --auth-muted: #888ea8;
+    --auth-border: #e0e6ed;
+    --auth-input: #ffffff;
+    --auth-danger: #e7515a;
+    --auth-warning: #e2a03f;
+}
+
+body.dark {
+    --auth-bg: #060818;
+    --auth-card: #0e1726;
+    --auth-text: #e0e6ed;
+    --auth-muted: #888ea8;
+    --auth-border: #1b2e4b;
+    --auth-input: #1b2e4b;
+}
+
+html,
+body.auth-page {
+    min-height: 100%;
+}
+
+body.auth-page {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: var(--auth-bg);
+    color: var(--auth-text);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 16px;
+}
+
+.auth-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+    max-width: 980px;
+    min-height: 560px;
+    background: var(--auth-card);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(14, 23, 38, 0.35);
+}
+
+/* ---------- Brand panel ---------- */
+.auth-brand {
+    position: relative;
+    overflow: hidden;
+    padding: 48px 44px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--auth-primary) 0%, var(--auth-secondary) 100%);
+}
+
+.auth-brand-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* App name wordmark (no logo image) */
+.auth-wordmark {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: 0.5px;
+    color: #fff;
+    word-break: break-word;
+}
+
+.auth-wordmark-tag {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+}
+
+.auth-brand-copy {
+    margin-top: auto;
+}
+
+.auth-brand-copy h2 {
+    color: #fff;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 12px;
+}
+
+.auth-brand-copy p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+.auth-brand-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.auth-brand-points li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 0;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.auth-brand-points svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.auth-blob {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.auth-blob-1 {
+    width: 320px;
+    height: 320px;
+    top: -120px;
+    right: -120px;
+}
+
+.auth-blob-2 {
+    width: 220px;
+    height: 220px;
+    bottom: -90px;
+    left: -60px;
+    background: rgba(255, 255, 255, 0.07);
+}
+
+/* ---------- Form panel ---------- */
+.auth-form-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px 52px;
+}
+
+.auth-form-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--auth-text);
+    margin-bottom: 6px;
+}
+
+.auth-form-header p {
+    font-size: 14px;
+    color: var(--auth-muted);
+    margin-bottom: 28px;
+}
+
+.auth-alert {
+    font-size: 13px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.auth-field {
+    margin-bottom: 20px;
+}
+
+.auth-field label {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--auth-text);
+    margin-bottom: 8px;
+}
+
+/*
+    Each field is a flex row: [icon][input][optional toggle]. The icon takes its own
+    space, so the placeholder and typed text always start beside it, never under it,
+    whatever padding the theme's form styles apply.
+*/
+.auth-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 48px;
+    padding: 0 8px 0 14px;
+    background-color: var(--auth-input);
+    border: 1px solid var(--auth-border);
+    border-radius: 12px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.auth-input:focus-within {
+    border-color: var(--auth-primary);
+    box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.15);
+}
+
+.auth-input.is-invalid {
+    border-color: var(--auth-danger);
+}
+
+.auth-input.is-invalid:focus-within {
+    box-shadow: 0 0 0 4px rgba(231, 81, 90, 0.15);
+}
+
+.auth-input-icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    color: var(--auth-muted);
+    line-height: 0;
+}
+
+.auth-input:focus-within .auth-input-icon {
+    color: var(--auth-primary);
+}
+
+.auth-input-control {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    box-shadow: none;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--auth-text);
+}
+
+.auth-input-control::placeholder {
+    color: var(--auth-muted);
+    opacity: 0.8;
+}
+
+/* Keep browser autofill from painting a different background inside the field */
+.auth-input-control:-webkit-autofill,
+.auth-input-control:-webkit-autofill:hover,
+.auth-input-control:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--auth-text);
+    -webkit-box-shadow: 0 0 0 1000px var(--auth-input) inset;
+    caret-color: var(--auth-text);
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+.auth-input-icon svg,
+.auth-password-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+.auth-password-toggle {
+    flex: 0 0 auto;
+    padding: 6px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--auth-muted);
+    line-height: 0;
+    cursor: pointer;
+}
+
+.auth-password-toggle:hover,
+.auth-password-toggle:focus-visible {
+    color: var(--auth-primary);
+}
+
+.auth-password-toggle .toggle-hide,
+.auth-password-toggle.is-visible .toggle-show {
+    display: none;
+}
+
+.auth-password-toggle.is-visible .toggle-hide {
+    display: inline;
+}
+
+.auth-field-error {
+    font-size: 12px;
+    color: var(--auth-danger);
+    margin-top: 6px;
+}
+
+.auth-capslock {
+    font-size: 12px;
+    color: var(--auth-warning);
+    margin-top: 6px;
+}
+
+.auth-link-small {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--auth-primary);
+    margin-bottom: 8px;
+}
+
+.auth-link-small:hover {
+    text-decoration: underline;
+}
+
+.auth-remember {
+    margin-bottom: 24px;
+}
+
+.auth-remember .form-check-label {
+    font-size: 13px;
+    color: var(--auth-muted);
+}
+
+.auth-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    height: 48px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px -10px rgba(67, 97, 238, 0.6);
+}
+
+.auth-submit:disabled {
+    opacity: 0.8;
+}
+
+.auth-footer {
+    margin: 32px 0 0;
+    font-size: 12px;
+    color: var(--auth-muted);
+    text-align: center;
+}
+
+.auth-footer a {
+    color: var(--auth-primary);
+    font-weight: 600;
+}
+
+/* Visible focus for keyboard users */
+.auth-page a:focus-visible,
+.auth-page button:focus-visible,
+.auth-page .form-check-input:focus-visible {
+    outline: 2px solid var(--auth-primary);
+    outline-offset: 2px;
+}
+
+/* ---------- Theme toggle ---------- */
+.auth-theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--auth-border);
+    border-radius: 12px;
+    background: var(--auth-card);
+    color: var(--auth-text);
+    cursor: pointer;
+}
+
+.auth-theme-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+.auth-theme-toggle .icon-sun,
+body.dark .auth-theme-toggle .icon-moon {
+    display: none;
+}
+
+body.dark .auth-theme-toggle .icon-sun {
+    display: inline;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991.98px) {
+    .auth-card {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        min-height: 0;
+    }
+
+    .auth-brand {
+        padding: 28px 28px 24px;
+    }
+
+    .auth-brand-copy {
+        margin-top: 20px;
+    }
+
+    .auth-brand-copy h2 {
+        font-size: 22px;
+    }
+
+    .auth-brand-copy p {
+        margin-bottom: 0;
+    }
+
+    .auth-brand-points {
+        display: none;
+    }
+
+    .auth-form-panel {
+        padding: 32px 28px;
+    }
+}
+
+@media (max-width: 400px) {
+    .auth-wrapper {
+        padding: 16px 12px;
+    }
+
+    .auth-form-panel {
+        padding: 28px 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.auth-page,
+    .auth-input {
+        transition: none;
+    }
+}

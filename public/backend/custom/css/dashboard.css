@@ -1,0 +1,279 @@
+/*
+    Admin dashboard (ADM-2): greeting strip, count cards, latest messages, email health and quick links.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+:root {
+    --db-accent: #ff014f;
+    --db-card: #fff;
+    --db-border: #e0e6ed;
+    --db-muted: #888ea8;
+    --db-text: #0e1726;
+    --db-hover: #f4f5f7;
+}
+
+body.dark {
+    --db-card: #0e1726;
+    --db-border: #1b2e4b;
+    --db-text: #e0e6ed;
+    --db-hover: #1b2e4b;
+}
+
+.db-hello {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding: 22px 24px;
+    color: #fff;
+    background: linear-gradient(135deg, #141416 0%, #2a1018 100%);
+    border-radius: 18px;
+}
+
+.db-hello h3 {
+    margin: 0;
+    font-weight: 700;
+    color: #fff;
+}
+
+.db-hello p {
+    margin: 4px 0 0;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------- Count cards ---------- */
+.db-cards {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.db-card {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 18px;
+    color: var(--db-text);
+    background: var(--db-card);
+    border: 1px solid var(--db-border);
+    border-radius: 16px;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.db-card:hover {
+    color: var(--db-text);
+    border-color: var(--db-accent);
+    transform: translateY(-2px);
+}
+
+.db-card.is-alert {
+    border-color: var(--db-accent);
+    box-shadow: inset 4px 0 0 var(--db-accent);
+}
+
+.db-card-value {
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.db-card.is-alert .db-card-value {
+    color: var(--db-accent);
+}
+
+.db-card-label {
+    font-size: 13px;
+    color: var(--db-muted);
+}
+
+.db-card-note {
+    font-size: 12px;
+    font-weight: 600;
+    color: #e2a03f;
+}
+
+/* ---------- Panels ---------- */
+.db-panel {
+    padding: 18px 20px;
+    background: var(--db-card);
+    border: 1px solid var(--db-border);
+    border-radius: 16px;
+}
+
+.db-panel-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.db-panel-head h5 {
+    margin: 0;
+    font-weight: 700;
+    color: var(--db-text);
+}
+
+.db-panel-head a {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--db-accent);
+}
+
+.db-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 8px;
+    color: var(--db-text);
+    border-bottom: 1px solid var(--db-border);
+    border-radius: 8px;
+}
+
+.db-message:last-child {
+    border-bottom: 0;
+}
+
+.db-message:hover {
+    color: var(--db-text);
+    background: var(--db-hover);
+}
+
+.db-dot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.db-message.is-unread .db-dot {
+    background: var(--db-accent);
+}
+
+.db-message-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.db-message-main strong,
+.db-message-main span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.db-message-main strong {
+    font-weight: 500;
+}
+
+.db-message.is-unread .db-message-main strong {
+    font-weight: 700;
+}
+
+.db-message-main span {
+    font-size: 13px;
+    color: var(--db-muted);
+}
+
+.db-message time {
+    flex: none;
+    font-size: 12px;
+    color: var(--db-muted);
+}
+
+.db-chip {
+    flex: none;
+    padding: 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+    border-radius: 999px;
+}
+
+.db-chip-contact {
+    color: #4361ee;
+    background: rgba(67, 97, 238, 0.12);
+}
+
+.db-chip-chat {
+    color: #00ab55;
+    background: rgba(0, 171, 85, 0.12);
+}
+
+.db-chip-project {
+    color: #e2a03f;
+    background: rgba(226, 160, 63, 0.14);
+}
+
+.db-empty {
+    margin: 0;
+    padding: 20px 0;
+    font-size: 13px;
+    color: var(--db-muted);
+}
+
+.db-health {
+    margin: 0 0 10px;
+    padding: 10px 12px;
+    font-size: 13px;
+    border-radius: 10px;
+}
+
+.db-health:last-child {
+    margin-bottom: 0;
+}
+
+.db-health.is-ok {
+    color: #00ab55;
+    background: rgba(0, 171, 85, 0.1);
+}
+
+.db-health.is-warning {
+    color: var(--db-text);
+    background: rgba(226, 160, 63, 0.14);
+}
+
+.db-health.is-failed {
+    color: var(--db-text);
+    background: rgba(231, 81, 90, 0.12);
+}
+
+.db-health a {
+    font-weight: 600;
+    color: var(--db-accent);
+}
+
+.db-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.db-links a {
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--db-text);
+    border: 1px solid var(--db-border);
+    border-radius: 999px;
+}
+
+.db-links a:hover {
+    border-color: var(--db-accent);
+}
+
+@media (max-width: 1199px) {
+    .db-cards {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 575px) {
+    .db-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

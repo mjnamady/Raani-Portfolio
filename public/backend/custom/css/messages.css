@@ -1,0 +1,429 @@
+/*
+    Admin messages inbox: a two-pane mail layout (list + reading pane) that stacks on small screens,
+    where the reading pane replaces the list while a message is open.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+:root {
+    --mx-accent: #ff014f;
+    --mx-card: #fff;
+    --mx-border: #e0e6ed;
+    --mx-muted: #888ea8;
+    --mx-text: #0e1726;
+    --mx-hover: #f4f5f7;
+    --mx-selected: rgba(255, 1, 79, 0.06);
+}
+
+body.dark {
+    --mx-card: #0e1726;
+    --mx-border: #1b2e4b;
+    --mx-text: #e0e6ed;
+    --mx-hover: #1b2e4b;
+    --mx-selected: rgba(255, 1, 79, 0.12);
+}
+
+.mx-inbox {
+    display: grid;
+    grid-template-columns: minmax(300px, 400px) 1fr;
+    min-height: 70vh;
+    overflow: hidden;
+    background: var(--mx-card);
+    border: 1px solid var(--mx-border);
+    border-radius: 16px;
+}
+
+/* ---------- List ---------- */
+.mx-list {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--mx-border);
+}
+
+.mx-toolbar {
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid var(--mx-border);
+}
+
+.mx-tabs,
+.mx-sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.mx-tabs a {
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--mx-muted);
+    border-radius: 999px;
+}
+
+.mx-tabs a span {
+    margin-left: 4px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+.mx-tabs a.active {
+    color: #fff;
+    background: var(--mx-accent);
+}
+
+.mx-sources {
+    margin-top: 10px;
+}
+
+.mx-sources a {
+    padding: 2px 10px;
+    font-size: 12px;
+    color: var(--mx-muted);
+    border: 1px solid var(--mx-border);
+    border-radius: 999px;
+}
+
+.mx-sources a.active {
+    color: var(--mx-text);
+    border-color: var(--mx-accent);
+}
+
+.mx-row {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    color: var(--mx-text);
+    border-bottom: 1px solid var(--mx-border);
+    border-left: 3px solid transparent;
+}
+
+.mx-row:hover {
+    color: var(--mx-text);
+    background: var(--mx-hover);
+}
+
+.mx-row.is-selected {
+    background: var(--mx-selected);
+    border-left-color: var(--mx-accent);
+}
+
+.mx-dot {
+    flex: none;
+    width: 8px;
+    height: 8px;
+    margin-top: 7px;
+    border-radius: 50%;
+}
+
+.mx-row.is-unread .mx-dot {
+    background: var(--mx-accent);
+}
+
+.mx-row-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.mx-row-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.mx-row-top strong {
+    overflow: hidden;
+    font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mx-row.is-unread .mx-row-top strong,
+.mx-row.is-unread .mx-row-subject {
+    font-weight: 700;
+}
+
+.mx-row-top time {
+    flex: none;
+    font-size: 12px;
+    color: var(--mx-muted);
+}
+
+.mx-row-subject {
+    overflow: hidden;
+    font-size: 13px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mx-row-meta {
+    display: flex;
+    gap: 6px;
+    margin-top: 2px;
+}
+
+.mx-chip {
+    padding: 0 8px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 18px;
+    border-radius: 999px;
+}
+
+.mx-chip-contact {
+    color: #4361ee;
+    background: rgba(67, 97, 238, 0.12);
+}
+
+.mx-chip-chat {
+    color: #00ab55;
+    background: rgba(0, 171, 85, 0.12);
+}
+
+.mx-chip-project {
+    color: #e2a03f;
+    background: rgba(226, 160, 63, 0.14);
+}
+
+.mx-replied {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--mx-muted);
+}
+
+.mx-empty,
+.mx-reader-empty {
+    padding: 48px 24px;
+    text-align: center;
+    color: var(--mx-muted);
+}
+
+.mx-empty strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--mx-text);
+}
+
+.mx-pages {
+    padding: 12px 14px;
+}
+
+/* ---------- Reading pane ---------- */
+.mx-reader {
+    padding: 24px 28px;
+    min-width: 0;
+}
+
+.mx-reader-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 10px;
+}
+
+.mx-back {
+    display: none;
+    margin-bottom: 14px;
+    font-weight: 600;
+    color: var(--mx-accent);
+}
+
+.mx-reader-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--mx-border);
+}
+
+.mx-reader-head h4 {
+    margin: 8px 0 0;
+    font-weight: 700;
+    color: var(--mx-text);
+    overflow-wrap: anywhere;
+}
+
+.mx-reader-head time {
+    font-size: 13px;
+    color: var(--mx-muted);
+}
+
+.mx-sender {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin: 18px 0;
+}
+
+.mx-sender dt {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mx-muted);
+}
+
+.mx-sender dd {
+    margin: 2px 0 0;
+    overflow-wrap: anywhere;
+}
+
+.mx-body {
+    padding: 18px 20px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--mx-text);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    background: var(--mx-hover);
+    border-radius: 12px;
+}
+
+.mx-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.mx-actions form {
+    margin: 0;
+}
+
+/* ---------- Waiting emails warning ---------- */
+.mx-warning {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    font-size: 14px;
+    color: var(--mx-text);
+    background: rgba(226, 160, 63, 0.14);
+    border: 1px solid #e2a03f;
+    border-radius: 12px;
+}
+
+/* ---------- Reply thread ---------- */
+.mx-reply {
+    margin: 14px 0 0 24px;
+    padding: 14px 18px;
+    border: 1px solid var(--mx-border);
+    border-left: 3px solid #00ab55;
+    border-radius: 12px;
+}
+
+.mx-reply.is-sending {
+    border-left-color: #e2a03f;
+}
+
+.mx-reply.is-failed {
+    border-left-color: #e7515a;
+}
+
+.mx-reply header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.mx-reply-status {
+    color: var(--mx-muted);
+}
+
+.mx-reply.is-failed .mx-reply-status {
+    font-weight: 700;
+    color: #e7515a;
+}
+
+.mx-reply-subject {
+    margin: 6px 0 4px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+.mx-reply-body {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.mx-reply-error {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #e7515a;
+}
+
+.mx-reply-error form {
+    margin: 0;
+}
+
+/* ---------- Composer ---------- */
+.mx-composer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 22px;
+    padding: 16px;
+    border: 1px solid var(--mx-border);
+    border-radius: 12px;
+}
+
+.mx-composer:focus-within {
+    border-color: var(--mx-accent);
+}
+
+.mx-composer-to {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.mx-composer-to span {
+    margin-right: 6px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--mx-muted);
+}
+
+.mx-composer-foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--mx-muted);
+}
+
+/* ---------- Small screens: one pane at a time ---------- */
+@media (max-width: 991px) {
+    .mx-inbox {
+        grid-template-columns: 1fr;
+    }
+
+    .mx-list {
+        border-right: 0;
+    }
+
+    .mx-inbox.has-selection .mx-list,
+    .mx-inbox:not(.has-selection) .mx-reader {
+        display: none;
+    }
+
+    .mx-back {
+        display: inline-block;
+    }
+
+    .mx-reader {
+        padding: 18px;
+    }
+}

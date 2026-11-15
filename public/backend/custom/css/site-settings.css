@@ -1,0 +1,310 @@
+/*
+    Admin Site Settings: tabbed form, each tab paired with a small dark preview of the part of
+    the public site it changes (browser tab + header, menu panel, footer).
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+:root {
+    --ss-accent: #ff014f;
+    --ss-card: #fff;
+    --ss-border: #e0e6ed;
+    --ss-muted: #888ea8;
+    --ss-text: #0e1726;
+    --ss-dark: #141416;
+}
+
+body.dark {
+    --ss-card: #0e1726;
+    --ss-border: #1b2e4b;
+    --ss-text: #e0e6ed;
+}
+
+.ss-note {
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    font-size: 13px;
+    background: var(--ss-card);
+    border: 1px dashed var(--ss-border);
+    border-radius: 12px;
+}
+
+.ss-note a {
+    font-weight: 600;
+    color: var(--ss-accent);
+}
+
+.ss-tabs {
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.ss-tabs .nav-link {
+    font-weight: 600;
+    border-radius: 999px;
+}
+
+.ss-tabs .nav-link.active {
+    background: var(--ss-accent);
+}
+
+.ss-tabs .nav-link.has-error::after {
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-left: 6px;
+    vertical-align: middle;
+    background: #e7515a;
+    border-radius: 50%;
+}
+
+.ss-card,
+.ss-image {
+    padding: 20px;
+    background: var(--ss-card);
+    border: 1px solid var(--ss-border);
+    border-radius: 16px;
+}
+
+.ss-card label,
+.ss-image label:not(.form-check-label) {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.ss-subtitle {
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--ss-muted);
+}
+
+.ss-error {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #e7515a;
+}
+
+/* ---------- Images ---------- */
+.ss-image {
+    height: 100%;
+}
+
+.ss-image.has-error {
+    border-color: #e7515a;
+}
+
+.ss-image-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 96px;
+    margin-bottom: 12px;
+    padding: 10px;
+    background: var(--ss-dark);
+    border-radius: 12px;
+}
+
+.ss-image-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.ss-image-box.is-small img {
+    width: 48px;
+    height: 48px;
+}
+
+/* ---------- Social ---------- */
+.ss-social-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ss-social-dot {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    background: var(--ss-border);
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.ss-social-dot.is-on {
+    background: #00ab55;
+}
+
+/* ---------- Previews ---------- */
+.ss-preview-label {
+    margin-bottom: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ss-muted);
+}
+
+.ss-browser,
+.ss-panel,
+.ss-footer {
+    overflow: hidden;
+    color: #fff;
+    background: var(--ss-dark);
+    border-radius: 16px;
+}
+
+.ss-browser-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 85%;
+    margin: 10px 0 0 12px;
+    padding: 8px 12px;
+    overflow: hidden;
+    font-size: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: rgba(255, 255, 255, 0.85);
+    background: #26262b;
+    border-radius: 10px 10px 0 0;
+}
+
+.ss-browser-tab img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
+.ss-browser-page {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 22px 18px;
+    background: #26262b;
+}
+
+.ss-browser-logo {
+    max-width: 140px;
+    max-height: 44px;
+    object-fit: contain;
+}
+
+.ss-browser-menu {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.ss-panel {
+    padding: 22px;
+}
+
+.ss-panel-photo {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 14px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.ss-panel strong {
+    display: block;
+    font-size: 16px;
+}
+
+.ss-panel p {
+    margin: 8px 0 12px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.ss-panel ul {
+    margin: 0 0 12px;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+}
+
+.ss-panel li small,
+.ss-panel-social {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--ss-accent);
+}
+
+.ss-footer {
+    padding: 22px;
+}
+
+.ss-footer-tagline {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.ss-footer-tagline span:first-child {
+    color: var(--ss-accent);
+}
+
+.ss-footer ul {
+    margin: 8px 0 0;
+    padding-left: 18px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ---------- Footer link rows ---------- */
+.ss-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ss-link-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+}
+
+.ss-link-row input {
+    flex: 1;
+    min-width: 120px;
+}
+
+.ss-link-handle {
+    width: 22px;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--ss-muted);
+}
+
+.ss-icon-btn {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    color: var(--ss-muted);
+    background: transparent;
+    border: 1px solid var(--ss-border);
+    border-radius: 8px;
+}
+
+.ss-icon-btn:hover {
+    color: var(--ss-text);
+}
+
+.ss-delete:hover {
+    color: #fff;
+    background: #e7515a;
+    border-color: #e7515a;
+}
+
+form[data-track-changes] .tab-content + .form-save-bar {
+    margin-top: 18px;
+}

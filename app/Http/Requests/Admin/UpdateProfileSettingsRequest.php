@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Models\User;
+use App\Services\ImageUploadService;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -53,7 +54,7 @@ class UpdateProfileSettingsRequest extends FormRequest
                 'image',
                 'mimes:jpg,jpeg,png,webp',
                 'max:2048',
-                'dimensions:min_width=100,min_height=100,max_width=4000,max_height=4000',
+                ImageUploadService::dimensionsRule(100),
             ],
         ];
     }
@@ -70,7 +71,7 @@ class UpdateProfileSettingsRequest extends FormRequest
             'current_password.required' => 'Enter your current password to change your email address.',
             'current_password.current_password' => 'The current password is incorrect.',
             'profile_image.max' => 'The profile image may not be larger than 2 MB.',
-            'profile_image.dimensions' => 'The profile image must be between 100x100 and 4000x4000 pixels.',
+            'profile_image.dimensions' => ImageUploadService::dimensionsMessage('The profile image', 100),
         ];
     }
 }

@@ -54,10 +54,16 @@
     <link href="{{ asset('backend/src/assets/css/dark/apps/user-profile.css') }}" rel="stylesheet" type="text/css" />
     <!--  END CUSTOM STYLE FILE  -->
 
+    <link href="{{ asset('backend/custom/css/admin-layout.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/custom/css/admin-toasts.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/custom/css/admin-form-tracker.css') }}" rel="stylesheet" type="text/css" />
+
     @stack('styles')
 
 </head>
-<body class=" layout-boxed">
+<body class="dark layout-boxed">
+    @include('admin.layout.components.theme_boot')
+
     <!-- BEGIN LOADER -->
     <div id="load_screen">
         <div class="loader"></div>
@@ -83,9 +89,9 @@
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
-
-                @yield('content')
-
+                <div class="middle-content container-xxl p-0">
+                    @yield('content')
+                </div>
             </div>
             <!--  BEGIN FOOTER  -->
                 @include('admin.layout.components.footer')
@@ -100,6 +106,8 @@
     <!--  BEGIN PROFILE SIDEBAR  -->
         @include('admin.layout.components.admin_profile_sidebar')
     <!--  END PROFILE SIDEBAR  -->
+
+    @include('admin.layout.components.toasts')
 
 
     <!--  BEGIN SEARCH MODAL  -->
@@ -615,6 +623,9 @@
     <script src="{{ asset('backend/src/plugins/src/waves/waves.min.js') }}"></script>
     <script src="{{ asset('backend/layouts/modern-dark-menu/app.js') }}"></script>
     <script src="{{ asset('backend/src/assets/js/theme-customizer.js') }}"></script>
+    <script src="{{ asset('backend/custom/js/admin-theme.js') }}"></script>
+    <script src="{{ asset('backend/custom/js/admin-toasts.js') }}"></script>
+    <script src="{{ asset('backend/custom/js/admin-form-tracker.js') }}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->

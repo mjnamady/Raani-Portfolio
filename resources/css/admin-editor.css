@@ -1,0 +1,55 @@
+/*
+    Rich-text editor styles for the admin panel: Quill's "snow" theme plus small fixes
+    so it sits nicely in the Cork admin cards in light and dark mode.
+*/
+@import 'quill/dist/quill.snow.css';
+
+.ql-toolbar.ql-snow {
+    border-color: #e0e6ed;
+    border-radius: 10px 10px 0 0;
+    background: #fafbfc;
+}
+
+.ql-container.ql-snow {
+    min-height: 260px;
+    font-family: inherit;
+    font-size: 15px;
+    border-color: #e0e6ed;
+    border-radius: 0 0 10px 10px;
+}
+
+.ql-editor {
+    min-height: 260px;
+    line-height: 1.7;
+}
+
+.rich-text-editor.is-invalid .ql-container,
+.rich-text-editor.is-invalid + .ql-toolbar {
+    border-color: #e7515a;
+}
+
+body.dark .ql-toolbar.ql-snow {
+    background: #1b2e4b;
+    border-color: #1b2e4b;
+}
+
+body.dark .ql-container.ql-snow {
+    border-color: #1b2e4b;
+    color: #e0e6ed;
+}
+
+body.dark .ql-snow .ql-stroke {
+    stroke: #bfc9d4;
+}
+
+body.dark .ql-snow .ql-fill {
+    fill: #bfc9d4;
+}
+
+body.dark .ql-snow .ql-picker {
+    color: #bfc9d4;
+}
+
+body.dark .ql-editor.ql-blank::before {
+    color: #888ea8;
+}

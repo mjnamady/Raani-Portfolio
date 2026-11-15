@@ -51,7 +51,7 @@ Follow `CLAUDE.md`, including its context boundaries: **never open `.env` or `.e
 ## 3. File uploads
 - Validation uses `image` / `mimes:jpg,jpeg,png,webp` and a max size; never trusts the client extension or MIME type alone.
 - SVG uploads are rejected unless sanitized (SVG can carry scripts).
-- Files are renamed (random names), stored on the `public` disk under a dedicated folder, and cannot be executed (no `.php`, `.phtml`, `.htaccess` accepted; nothing written into `public/assets`).
+- Files are renamed (random names), stored on the `public` disk under a dedicated folder, and cannot be executed (no `.php`, `.phtml`, `.htaccess` accepted; nothing written into `public/frontend/assets` or `public/backend`).
 - Image processing re-encodes images (strips embedded payloads and EXIF location data).
 - Deleting or replacing records removes old files; user input never builds a file path (no path traversal).
 

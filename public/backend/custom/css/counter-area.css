@@ -1,0 +1,357 @@
+/*
+    Admin counter area page: a "scoreboard" laid out like the public section,
+    where the numbers are typed straight into large inputs.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+:root {
+    --ct-accent: #4361ee;
+    --ct-accent-soft: rgba(67, 97, 238, 0.1);
+    --ct-card: #fff;
+    --ct-border: #e0e6ed;
+    --ct-muted: #888ea8;
+    --ct-text: #0e1726;
+}
+
+body.dark {
+    --ct-card: #0e1726;
+    --ct-border: #1b2e4b;
+    --ct-text: #e0e6ed;
+}
+
+/* ---------- Toolbar ---------- */
+.ct-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.ct-toolbar h4 {
+    margin: 0 0 4px;
+    font-weight: 700;
+    color: var(--ct-text);
+}
+
+.ct-toolbar p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ct-muted);
+}
+
+.ct-segmented {
+    display: inline-flex;
+    padding: 4px;
+    margin: 0;
+    background: var(--ct-card);
+    border: 1px solid var(--ct-border);
+    border-radius: 12px;
+}
+
+.ct-segmented label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ct-muted);
+    cursor: pointer;
+    border-radius: 9px;
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.ct-segmented input:checked + label {
+    color: #fff;
+    background: var(--ct-accent);
+}
+
+.ct-segmented input#is_active_off:checked + label {
+    background: #e2a03f;
+}
+
+.ct-segmented input:focus-visible + label {
+    outline: 2px solid var(--ct-accent);
+    outline-offset: 2px;
+}
+
+.ct-seg-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* ---------- Board ---------- */
+.ct-board {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 20px;
+    transition: opacity 0.2s, filter 0.2s;
+}
+
+form:has(#is_active_off:checked) .ct-board {
+    opacity: 0.55;
+    filter: grayscale(0.6);
+}
+
+.ct-tile-tag {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--ct-muted);
+}
+
+/* Shared "type straight in" inputs */
+.ct-number-input,
+.ct-suffix-input,
+.ct-label-input {
+    padding: 2px 0;
+    color: var(--ct-text);
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    outline: 0;
+    transition: border-color 0.15s;
+}
+
+.ct-number-input:hover,
+.ct-suffix-input:hover,
+.ct-label-input:hover {
+    border-bottom-color: var(--ct-border);
+}
+
+.ct-number-input:focus,
+.ct-suffix-input:focus,
+.ct-label-input:focus {
+    border-bottom-color: var(--ct-accent);
+}
+
+.ct-number-input.is-invalid,
+.ct-suffix-input.is-invalid,
+.ct-label-input.is-invalid {
+    border-bottom-color: #e7515a;
+}
+
+.ct-number-input::placeholder,
+.ct-suffix-input::placeholder,
+.ct-label-input::placeholder {
+    color: var(--ct-muted);
+    opacity: 0.5;
+}
+
+/* Hide number spinners: the big numbers are typed */
+.ct-number-input::-webkit-outer-spin-button,
+.ct-number-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.ct-number-input {
+    -moz-appearance: textfield;
+    appearance: textfield;
+    min-width: 1.4ch;
+    font-weight: 800;
+    color: var(--ct-accent);
+}
+
+.ct-suffix-input {
+    width: 2.6ch;
+    font-weight: 800;
+    color: var(--ct-accent);
+}
+
+.ct-label-input {
+    display: block;
+    width: 100%;
+    resize: none;
+    overflow: hidden;
+}
+
+.ct-error {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #e7515a;
+}
+
+/* ---------- Highlight tile ---------- */
+.ct-highlight {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 28px;
+    background: var(--ct-card);
+    border: 1px solid var(--ct-border);
+    border-radius: 22px;
+    overflow: hidden;
+}
+
+.ct-highlight::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--ct-accent), #805dca);
+}
+
+.ct-big-number {
+    display: flex;
+    align-items: baseline;
+    margin: 10px 0 4px;
+}
+
+.ct-big-number .ct-number-input,
+.ct-big-number .ct-suffix-input {
+    font-size: clamp(56px, 6vw, 84px);
+    line-height: 1;
+}
+
+.ct-field-label {
+    display: flex;
+    justify-content: space-between;
+    margin: 18px 0 2px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: var(--ct-muted);
+}
+
+.ct-hint {
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    opacity: 0.8;
+}
+
+.ct-label-big {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.ct-description {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ct-muted);
+}
+
+/* ---------- Stat tiles ---------- */
+.ct-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.ct-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 20px 20px;
+    background: var(--ct-card);
+    border: 1px solid var(--ct-border);
+    border-radius: 18px;
+    transition: border-color 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+.ct-tile:focus-within {
+    border-color: var(--ct-accent);
+    box-shadow: 0 8px 24px rgba(67, 97, 238, 0.14);
+}
+
+.ct-tile-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.ct-clear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    color: var(--ct-muted);
+    background: transparent;
+    border: 0;
+    border-radius: 7px;
+}
+
+.ct-clear:hover {
+    color: #e7515a;
+    background: rgba(231, 81, 90, 0.1);
+}
+
+.ct-clear svg {
+    width: 15px;
+    height: 15px;
+}
+
+.ct-number {
+    display: flex;
+    align-items: baseline;
+}
+
+.ct-number .ct-number-input,
+.ct-number .ct-suffix-input {
+    font-size: 40px;
+    line-height: 1.1;
+}
+
+.ct-tile .ct-label-input {
+    margin-top: 6px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.ct-empty-note {
+    display: none;
+    margin-top: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ct-muted);
+}
+
+.ct-tile.is-empty {
+    border-style: dashed;
+    opacity: 0.7;
+}
+
+.ct-tile.is-empty:focus-within {
+    opacity: 1;
+}
+
+.ct-tile.is-empty .ct-empty-note {
+    display: block;
+}
+
+.ct-tile.is-empty .ct-clear {
+    visibility: hidden;
+}
+
+@media (max-width: 1199.98px) {
+    .ct-board {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .ct-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ct-board,
+    .ct-tile,
+    .ct-segmented label {
+        transition: none;
+    }
+}

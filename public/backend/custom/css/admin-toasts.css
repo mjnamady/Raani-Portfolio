@@ -1,0 +1,163 @@
+/*
+    Toast notifications for admin save/update/delete results.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+.admin-toast-container {
+    position: fixed;
+    top: 84px;
+    right: 24px;
+    z-index: 1090;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: min(380px, calc(100vw - 32px));
+    pointer-events: none;
+}
+
+.admin-toast {
+    --toast-accent: #00ab55;
+    --toast-duration: 5000ms;
+
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    max-width: none;
+    padding: 14px 14px 18px;
+    overflow: hidden;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.96);
+    border: 1px solid #e0e6ed;
+    border-left: 4px solid var(--toast-accent);
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(14, 23, 38, 0.18);
+    backdrop-filter: blur(8px);
+    pointer-events: auto;
+}
+
+/* Bootstrap hides toasts without .show; animate in and out instead of a plain fade. */
+.admin-toast.showing,
+.admin-toast.show {
+    animation: admin-toast-in 0.35s cubic-bezier(0.21, 1.02, 0.73, 1) both;
+}
+
+.admin-toast.hide-anim {
+    display: flex;
+    animation: admin-toast-out 0.25s ease-in both;
+}
+
+.admin-toast-danger {
+    --toast-accent: #e7515a;
+}
+
+.admin-toast-icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: var(--toast-accent);
+    background-color: color-mix(in srgb, var(--toast-accent) 14%, transparent);
+    border-radius: 50%;
+}
+
+.admin-toast-body {
+    flex: 1;
+    min-width: 0;
+    padding-top: 1px;
+}
+
+.admin-toast-title {
+    margin: 0 0 2px;
+    font-weight: 600;
+    color: #0e1726;
+}
+
+.admin-toast-message {
+    margin: 0;
+    color: #515365;
+    overflow-wrap: anywhere;
+}
+
+.admin-toast-close {
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 12px;
+}
+
+.admin-toast-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--toast-accent);
+    transform-origin: left;
+    opacity: 0.8;
+}
+
+.admin-toast.show .admin-toast-progress {
+    animation: admin-toast-progress var(--toast-duration) linear forwards;
+}
+
+.admin-toast.is-paused .admin-toast-progress {
+    animation-play-state: paused;
+}
+
+@keyframes admin-toast-in {
+    from { opacity: 0; transform: translateX(110%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes admin-toast-out {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(110%); }
+}
+
+@keyframes admin-toast-progress {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0); }
+}
+
+/* Dark mode (Cork toggles .dark on body) */
+body.dark .admin-toast {
+    background-color: rgba(14, 23, 38, 0.96);
+    border-color: #1b2e4b;
+    border-left-color: var(--toast-accent);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+}
+
+body.dark .admin-toast-title {
+    color: #e0e6ed;
+}
+
+body.dark .admin-toast-message {
+    color: #bfc9d4;
+}
+
+body.dark .admin-toast-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+@media (max-width: 575.98px) {
+    .admin-toast-container {
+        top: 72px;
+        right: 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-toast.showing,
+    .admin-toast.show,
+    .admin-toast.hide-anim {
+        animation: none;
+    }
+
+    .admin-toast.show .admin-toast-progress {
+        animation: none;
+        transform: scaleX(0);
+    }
+}

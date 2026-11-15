@@ -1,0 +1,149 @@
+/*
+    Admin education/experience entry form with a live preview of the public card.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+.rf-card {
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #e0e6ed;
+    border-radius: 18px;
+}
+
+.rf-card h5 {
+    margin-bottom: 4px;
+    font-weight: 700;
+}
+
+.rf-subtitle {
+    margin-bottom: 22px;
+    font-size: 13px;
+    color: #888ea8;
+}
+
+.rf-card label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+/* ---------- Preview ---------- */
+.rf-preview-wrap {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border-radius: 18px;
+    background: #0a0a0d;
+}
+
+.rf-preview-tag {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+}
+
+.rf-preview-note {
+    margin: 14px 0 0;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.rf-preview-wrap p {
+    overflow-wrap: anywhere;
+}
+
+.rf-preview-wrap .is-placeholder {
+    opacity: 0.35;
+    font-style: italic;
+}
+
+/* Education card */
+.rf-edu-card {
+    padding: 26px;
+    border-radius: 16px;
+    background: #141414;
+}
+
+.rf-edu-sub {
+    margin: 0 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff014f;
+}
+
+.rf-edu-org:not(:empty)::before {
+    content: " · ";
+}
+
+.rf-edu-years {
+    margin: 0 0 12px;
+    font-size: 34px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+}
+
+.rf-edu-para,
+.rf-exp-para {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #a3a3ad;
+}
+
+/* Experience entry */
+.rf-exp-card {
+    padding: 6px 4px;
+}
+
+.rf-exp-label {
+    margin: 0 0 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ff014f;
+}
+
+.rf-exp-name {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #fff;
+}
+
+.rf-exp-role {
+    margin: 4px 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Dark mode (Cork toggles .dark on body) */
+body.dark .rf-card {
+    background: #0e1726;
+    border-color: #1b2e4b;
+}
+
+body.dark .rf-card h5,
+body.dark .rf-card label {
+    color: #e0e6ed;
+}
+
+body.dark .rf-preview-wrap {
+    border: 1px solid #1b2e4b;
+}
+
+@media (max-width: 1199.98px) {
+    .rf-preview-wrap {
+        position: static;
+    }
+}

@@ -1,0 +1,264 @@
+/*
+    Admin About page: a strip of links to the reused sections, a settings row, and a two-column
+    "skill board" whose rows show each bar's meter as you edit it.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+:root {
+    --ab-accent: #ff014f;
+    --ab-card: #fff;
+    --ab-border: #e0e6ed;
+    --ab-muted: #888ea8;
+    --ab-text: #0e1726;
+    --ab-soft: #f4f5f7;
+    --ab-board: #121214;
+}
+
+body.dark {
+    --ab-card: #0e1726;
+    --ab-border: #1b2e4b;
+    --ab-text: #e0e6ed;
+    --ab-soft: #1b2e4b;
+}
+
+.ab-reused {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    font-size: 13px;
+    background: var(--ab-card);
+    border: 1px dashed var(--ab-border);
+    border-radius: 12px;
+}
+
+.ab-reused-label {
+    margin-right: 4px;
+    color: var(--ab-muted);
+}
+
+.ab-reused a {
+    padding: 3px 10px;
+    font-weight: 600;
+    color: var(--ab-accent);
+    background: rgba(255, 1, 79, 0.08);
+    border-radius: 999px;
+}
+
+.ab-card {
+    padding: 22px;
+    background: var(--ab-card);
+    border: 1px solid var(--ab-border);
+    border-radius: 16px;
+}
+
+.ab-card h5 {
+    margin-bottom: 4px;
+    font-weight: 700;
+    color: var(--ab-text);
+}
+
+.ab-subtitle {
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--ab-muted);
+}
+
+.ab-card label:not(.form-check-label) {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+}
+
+.ab-column-setting {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+.ab-column-setting:last-child {
+    margin-bottom: 0;
+}
+
+.ab-column-setting .form-switch {
+    padding-bottom: 8px;
+}
+
+.ab-settings .form-save-bar {
+    margin-top: 12px;
+}
+
+/* ---------- Skill board ---------- */
+.ab-board {
+    height: 100%;
+    padding: 20px;
+    color: #fff;
+    background: var(--ab-board);
+    border-radius: 18px;
+}
+
+.ab-board-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.ab-board-head h4 {
+    margin: 0;
+    font-weight: 700;
+    color: #fff;
+}
+
+.ab-board-head > span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.ab-badge-off,
+.ab-badge-hidden {
+    padding: 1px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #1b1b20 !important;
+    background: #e2a03f;
+    border-radius: 999px;
+}
+
+.ab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ab-bar.is-hidden-on-site {
+    opacity: 0.55;
+}
+
+.ab-bar-edit,
+.ab-add {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    min-width: 260px;
+    margin: 0;
+}
+
+.ab-bar-name,
+.ab-add > input[type="text"] {
+    flex: 1;
+    min-width: 140px;
+}
+
+.ab-percent {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ab-percent input {
+    width: 76px;
+}
+
+.ab-percent span {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.ab-meter {
+    flex-basis: 100%;
+    height: 6px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+}
+
+.ab-meter span {
+    display: block;
+    height: 100%;
+    background: var(--ab-accent);
+    border-radius: 999px;
+    transition: width 0.2s ease;
+}
+
+.ab-bar-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.ab-bar-actions form {
+    margin: 0;
+}
+
+.ab-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.65);
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+}
+
+.ab-icon-btn:hover:not(:disabled) {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.ab-icon-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.ab-delete:hover:not(:disabled) {
+    background: #e7515a;
+}
+
+.ab-row-error {
+    flex-basis: 100%;
+    font-size: 12px;
+    color: #ff7a9c;
+}
+
+.ab-empty {
+    margin: 0;
+    padding: 18px 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.ab-add {
+    margin-top: 14px;
+    padding: 12px;
+    border: 2px dashed rgba(255, 255, 255, 0.14);
+    border-radius: 12px;
+}
+
+.ab-add:focus-within {
+    border-color: var(--ab-accent);
+}
+
+.ab-add-plus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    color: var(--ab-accent);
+    background: rgba(255, 1, 79, 0.15);
+    border-radius: 50%;
+}

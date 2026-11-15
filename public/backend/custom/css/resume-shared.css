@@ -1,0 +1,63 @@
+/*
+    Shared bits of the education and experience admin pages: entry action buttons and badges.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+.rs-actions {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 2px;
+}
+
+.rs-actions form {
+    margin: 0;
+}
+
+.rs-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    color: #888ea8;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+}
+
+.rs-action:hover:not(:disabled) {
+    color: #4361ee;
+    background: rgba(67, 97, 238, 0.08);
+}
+
+.rs-action:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.rs-action svg {
+    width: 17px;
+    height: 17px;
+}
+
+.rs-action.is-off {
+    color: #e2a03f;
+}
+
+.rs-delete:hover:not(:disabled) {
+    color: #e7515a;
+    background: rgba(231, 81, 90, 0.1);
+}
+
+.rs-hidden-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #e2a03f;
+    border-radius: 999px;
+    background: rgba(226, 160, 63, 0.14);
+}

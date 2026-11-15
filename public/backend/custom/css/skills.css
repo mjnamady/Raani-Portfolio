@@ -1,0 +1,439 @@
+/*
+    Admin My Skill: a dark "skill stack" that mirrors the public section, and a skill form
+    with a visual icon picker and a live preview card.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+:root {
+    --sk-accent: #ff014f;
+    --sk-card: #fff;
+    --sk-border: #e0e6ed;
+    --sk-muted: #888ea8;
+    --sk-text: #0e1726;
+}
+
+body.dark {
+    --sk-card: #0e1726;
+    --sk-border: #1b2e4b;
+    --sk-text: #e0e6ed;
+}
+
+/* ---------- Cards ---------- */
+.sk-card {
+    padding: 22px;
+    background: var(--sk-card);
+    border: 1px solid var(--sk-border);
+    border-radius: 18px;
+}
+
+.sk-card h5 {
+    margin-bottom: 4px;
+    font-weight: 700;
+    color: var(--sk-text);
+}
+
+.sk-subtitle {
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: var(--sk-muted);
+}
+
+.sk-card label:not(.form-check-label) {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 0.35rem;
+}
+
+/* ---------- Skill stack (mirrors the public rows) ---------- */
+.sk-stack-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.sk-stack-head h4 {
+    margin: 0;
+    font-weight: 700;
+    color: var(--sk-text);
+}
+
+.sk-stack-head span {
+    font-size: 13px;
+    color: var(--sk-muted);
+}
+
+.sk-stack {
+    overflow: hidden;
+    border-radius: 20px;
+    background: #0b0b0d;
+}
+
+.sk-row {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 22px;
+    color: #fff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    transition: background-color 0.15s;
+}
+
+.sk-row:last-child {
+    border-bottom: 0;
+}
+
+.sk-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.sk-row.is-highlighted {
+    background: linear-gradient(90deg, var(--sk-accent) 0%, #c3003c 100%);
+}
+
+.sk-row.is-hidden-on-site {
+    opacity: 0.5;
+}
+
+.sk-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    font-size: 22px;
+    color: var(--sk-accent);
+    border-radius: 14px;
+    background: rgba(255, 1, 79, 0.12);
+}
+
+.sk-row.is-highlighted .sk-icon {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.sk-main {
+    flex: 1;
+    min-width: 220px;
+}
+
+.sk-title-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.sk-main h5 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.sk-main p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.sk-row.is-highlighted .sk-main p {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.sk-badge {
+    padding: 2px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 999px;
+}
+
+.sk-badge-star {
+    color: var(--sk-accent);
+    background: #fff;
+}
+
+.sk-badge-hidden {
+    color: #1b1b20;
+    background: #e2a03f;
+}
+
+.sk-count {
+    min-width: 80px;
+    text-align: right;
+}
+
+.sk-count strong {
+    display: block;
+    font-size: 26px;
+    line-height: 1;
+}
+
+.sk-count span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.sk-actions {
+    display: flex;
+    gap: 2px;
+}
+
+.sk-actions form {
+    margin: 0;
+}
+
+.sk-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.65);
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+}
+
+.sk-action:hover:not(:disabled) {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.sk-action:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.sk-action.is-on {
+    color: #fff;
+    opacity: 1;
+}
+
+.sk-action svg {
+    width: 16px;
+    height: 16px;
+}
+
+.sk-delete:hover:not(:disabled) {
+    background: #e7515a;
+}
+
+.sk-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.sk-head-add {
+    margin-left: auto;
+}
+
+.sk-add-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 22px;
+    border: 2px dashed rgba(255, 255, 255, 0.14);
+    border-radius: 0 0 20px 20px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.sk-add-row:hover,
+.sk-add-row:focus-visible {
+    border-color: var(--sk-accent);
+    background: rgba(255, 1, 79, 0.08);
+    color: #fff;
+}
+
+.sk-add-plus {
+    display: inline-flex;
+    flex: 0 0 56px;
+    align-items: center;
+    justify-content: center;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255, 1, 79, 0.15);
+    color: var(--sk-accent);
+    font-size: 28px;
+    line-height: 1;
+}
+
+.sk-add-row strong {
+    display: block;
+    font-size: 16px;
+    color: inherit;
+}
+
+.sk-add-row small {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.sk-settings .form-save-bar {
+    margin-top: 12px;
+}
+
+/* ---------- Icon picker ---------- */
+.sk-icon-picker {
+    padding: 16px;
+    margin-bottom: 20px;
+    border: 1px dashed var(--sk-border);
+    border-radius: 14px;
+}
+
+.sk-icon-current {
+    min-width: 46px;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--sk-accent);
+}
+
+.sk-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+    gap: 6px;
+    max-height: 210px;
+    overflow-y: auto;
+}
+
+.sk-icon-option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    font-size: 18px;
+    color: var(--sk-text);
+    background: transparent;
+    border: 1px solid var(--sk-border);
+    border-radius: 10px;
+}
+
+.sk-icon-option:hover,
+.sk-icon-option:focus-visible {
+    color: var(--sk-accent);
+    border-color: var(--sk-accent);
+}
+
+.sk-icon-option.is-selected {
+    color: #fff;
+    background: var(--sk-accent);
+    border-color: var(--sk-accent);
+}
+
+.sk-switches .form-check {
+    margin-bottom: 10px;
+}
+
+/* ---------- Live preview (dark, like the public card) ---------- */
+.sk-preview-wrap {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border-radius: 18px;
+    background: #0b0b0d;
+}
+
+.sk-preview-tag {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 999px;
+}
+
+.sk-preview-card {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    padding: 22px;
+    color: #fff;
+    border-radius: 16px;
+    background: #141414;
+    transition: background-color 0.15s;
+}
+
+.sk-preview-card.is-highlighted {
+    background: linear-gradient(90deg, var(--sk-accent) 0%, #c3003c 100%);
+}
+
+.sk-preview-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    font-size: 24px;
+    color: var(--sk-accent);
+    border-radius: 50%;
+    background: rgba(255, 1, 79, 0.12);
+}
+
+.sk-preview-card.is-highlighted .sk-preview-icon {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.sk-preview-title h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    overflow-wrap: anywhere;
+}
+
+.sk-preview-title p {
+    margin: 2px 0 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.sk-preview-desc {
+    flex-basis: 100%;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+    overflow-wrap: anywhere;
+}
+
+.sk-preview-card .is-placeholder {
+    opacity: 0.4;
+    font-style: italic;
+}
+
+.sk-preview-note {
+    margin: 14px 0 0;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+body.dark .sk-stack,
+body.dark .sk-preview-wrap {
+    border: 1px solid #1b2e4b;
+}
+
+@media (max-width: 1199.98px) {
+    .sk-preview-wrap {
+        position: static;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sk-row,
+    .sk-preview-card {
+        transition: none;
+    }
+}

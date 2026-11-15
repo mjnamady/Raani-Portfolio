@@ -1,0 +1,312 @@
+/*
+    Admin services area: a board of card tiles, each showing the public card above its fields.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+/* ---------- Board header ---------- */
+.sv-board-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.sv-board-head h4 {
+    margin: 0 0 4px;
+    font-weight: 700;
+}
+
+.sv-board-head p {
+    margin: 0;
+    font-size: 13px;
+    color: #888ea8;
+}
+
+.sv-board-meter {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 16px;
+    font-size: 13px;
+    background: #fff;
+    border: 1px solid #e0e6ed;
+    border-radius: 999px;
+}
+
+.sv-board-count strong {
+    font-size: 16px;
+    color: #4361ee;
+}
+
+.sv-board-shown {
+    padding-left: 14px;
+    color: #00ab55;
+    font-weight: 600;
+    border-left: 1px solid #e0e6ed;
+}
+
+/* ---------- Board grid ---------- */
+.sv-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.sv-tile-col {
+    min-width: 0;
+}
+
+.sv-tile {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #e0e6ed;
+    border-radius: 18px;
+    transition: border-color 0.15s, box-shadow 0.15s, opacity 0.15s;
+}
+
+.sv-tile:focus-within {
+    border-color: #4361ee;
+    box-shadow: 0 8px 24px rgba(67, 97, 238, 0.15);
+}
+
+.sv-tile.has-error {
+    border-color: #e7515a;
+}
+
+/* Toolbar */
+.sv-tile-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px 8px 14px;
+}
+
+.sv-tile-position {
+    font-size: 12px;
+    font-weight: 700;
+    color: #888ea8;
+}
+
+.sv-tile-actions {
+    display: flex;
+    gap: 2px;
+}
+
+.sv-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    color: #888ea8;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+}
+
+.sv-icon-btn:hover:not(:disabled) {
+    color: #4361ee;
+    background: rgba(67, 97, 238, 0.08);
+}
+
+.sv-icon-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.sv-icon-btn svg {
+    width: 17px;
+    height: 17px;
+}
+
+.sv-remove:hover:not(:disabled) {
+    color: #e7515a;
+    background: rgba(231, 81, 90, 0.1);
+}
+
+.sv-visibility:focus-within {
+    outline: 2px solid #4361ee;
+    outline-offset: 1px;
+}
+
+.sv-visibility .sv-eye-off,
+.is-hidden-on-site .sv-visibility .sv-eye-on {
+    display: none;
+}
+
+.is-hidden-on-site .sv-visibility .sv-eye-off {
+    display: block;
+    color: #e2a03f;
+}
+
+/* The card as visitors see it */
+.sv-card-face {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+    padding: 22px 12px 18px;
+    text-align: center;
+    color: #fff;
+    border-radius: 14px;
+    background: linear-gradient(160deg, #1b1b20 0%, #0e0e11 100%);
+    transition: filter 0.15s;
+}
+
+.sv-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 58px;
+    height: 58px;
+    margin-bottom: 12px;
+    font-size: 24px;
+    color: #ff014f;
+    border-radius: 50%;
+    background: rgba(255, 1, 79, 0.12);
+}
+
+.sv-card-title {
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+.sv-card-count {
+    font-size: 12px;
+    color: #a1a1a1;
+}
+
+.sv-card-hidden {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: none;
+    padding: 2px 8px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #1b1b20;
+    border-radius: 999px;
+    background: #e2a03f;
+}
+
+.is-hidden-on-site .sv-card-face {
+    filter: grayscale(1) brightness(0.7);
+}
+
+.is-hidden-on-site .sv-card-hidden {
+    display: block;
+}
+
+/* Fields */
+.sv-tile-fields {
+    padding: 14px;
+}
+
+.sv-tile-fields label {
+    margin-bottom: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: #888ea8;
+}
+
+.icon-input-group .input-group-text {
+    min-width: 38px;
+    justify-content: center;
+    font-size: 15px;
+}
+
+/* Add tile */
+.sv-add-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    padding: 20px;
+    color: #4361ee;
+    background: rgba(67, 97, 238, 0.03);
+    border: 2px dashed rgba(67, 97, 238, 0.35);
+    border-radius: 18px;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+
+.sv-add-tile:hover,
+.sv-add-tile:focus-visible {
+    background: rgba(67, 97, 238, 0.08);
+    border-color: #4361ee;
+}
+
+.sv-add-plus {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    font-size: 30px;
+    line-height: 1;
+    color: #fff;
+    border-radius: 50%;
+    background: #4361ee;
+}
+
+.sv-add-tile small {
+    max-width: 200px;
+    color: #888ea8;
+}
+
+.sv-board-help {
+    margin: 18px 0 0;
+    font-size: 12px;
+    color: #888ea8;
+}
+
+/* Dark mode (Cork toggles .dark on body) */
+body.dark .sv-tile,
+body.dark .sv-board-meter {
+    background: #0e1726;
+    border-color: #1b2e4b;
+}
+
+body.dark .sv-tile:focus-within {
+    border-color: #4361ee;
+}
+
+body.dark .sv-tile.has-error {
+    border-color: #e7515a;
+}
+
+body.dark .sv-board-shown {
+    border-color: #1b2e4b;
+}
+
+body.dark .sv-board-head h4 {
+    color: #e0e6ed;
+}
+
+body.dark .sv-card-face {
+    background: linear-gradient(160deg, #060818 0%, #02030b 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sv-tile,
+    .sv-card-face,
+    .sv-add-tile {
+        transition: none;
+    }
+}

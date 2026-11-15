@@ -18,7 +18,7 @@ Rules: **behaviour and visual output must not change.** No new features and no c
    - magic strings for statuses and message sources (use enums or constants);
    - unclear names and long methods.
 3. **Change in small steps.** One kind of change at a time, running the related tests after each step.
-4. **Keep security and design intact.** Never remove middleware, `@csrf`, throttling, honeypots, sanitizing, escaping or the `published()` scope; never switch `{{ }}` to `{!! !!}`; never edit files in `public/assets`. Keep the theme's HTML structure and CSS classes identical.
+4. **Keep security and design intact.** Never remove middleware, `@csrf`, throttling, honeypots, sanitizing, escaping or the `published()` scope; never switch `{{ }}` to `{!! !!}`; never edit files in `public/frontend/assets` or `public/backend/src`. Keep the theme's HTML structure and CSS classes identical.
 5. **Verify.** Run the full suite and `./vendor/bin/pint`. For Blade refactors, compare the rendered HTML of affected pages with the baseline.
 
 Report: problems found, what changed and why (file by file), test results before and after, any rendered-output differences, and what is left for later. Suggest running the **security-reviewer** if admin access, uploads, forms, rich text or caching code was touched.

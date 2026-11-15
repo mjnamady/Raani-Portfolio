@@ -31,7 +31,7 @@ The Reeni theme is static HTML: every name, number, image and paragraph is hard-
 
 ### 1.3 Non-goals (this release)
 
-Multiple admin users and role management, real-time live chat, online payments for pricing plans, a client portal, blog comments, multi-language content, sending newsletter campaigns from the site (sign-ups are collected and exportable only), and a drag-and-drop page builder.
+Multiple admin users and role management, real-time live chat, online payments for pricing plans, a client portal, multi-language content, sending newsletter campaigns from the site (sign-ups are collected and exportable only), and a drag-and-drop page builder.
 
 ---
 
@@ -73,7 +73,7 @@ Notes: Laravel 13 needs PHP 8.3 or newer, so the XAMPP build must match. The adm
 | Projects | `/projects` | Project grid, filterable by category |
 | Project details | `/projects/{slug}` | Hero image, rich content, feature list, gallery, info sidebar (name, client/author, date, tags), previous/next, contact form |
 | Blog | `/blog` | Post cards, pagination, category and tag filters, search |
-| Blog details | `/blog/{slug}` | Featured image, content, author, date, category, tags, sidebar (categories, recent posts), previous/next |
+| Blog details | `/blog/{slug}` | Featured image, content, author, date, category, tags, sidebar (categories, recent posts), previous/next, approved comments and comment form |
 | Contact | `/contact` | Address, email and phone cards, contact form |
 | Legal | `/terms`, `/privacy` | Admin-editable text pages |
 
@@ -83,7 +83,7 @@ Header (logo, menu with Services, Blog and Project dropdowns, social icons, hamb
 
 ### 4.3 Admin panel
 
-Private area at `/admin` (path configurable) with sidebar navigation: Dashboard, Site Settings, Profile & Hero, Home Sections, Services, Skills, Projects, Blog, Pricing, Testimonials, Clients, Resume (Education & Experience), Stats, Pages, Messages, Subscribers, Account.
+Private area at `/admin` (path configurable) with sidebar navigation: Dashboard, Site Settings, Profile & Hero, Home Sections, Services, Skills, Projects, Blog (Posts, Categories, Comments), Pricing, Testimonials, Clients, Resume (Education & Experience), Stats, Pages, Messages, Subscribers, Account.
 
 ---
 
@@ -131,7 +131,8 @@ Every section has an admin-editable **eyebrow** (small red text), **title**, opt
 | ABT-1 | Intro block from the profile (photo, title, bio) | P0 |
 | ABT-2 | Education entries: title, institution (optional), years, description; shown as two-column cards | P0 |
 | ABT-3 | Experience entries: label, organisation or name, role, description; with a side image | P0 |
-| ABT-4 | Reuses the counter, testimonial and contact form sections | P0 |
+| ABT-4 | Reuses the service cards, counter, education/experience, testimonial and contact form sections | P0 |
+| ABT-5 | Two columns of skill progress bars ("Design Skill" / "Development Skill"): editable column titles and on/off; bars with name and percentage (0-100), order and active flag | P1 |
 
 ### 5.4 Services
 
@@ -171,6 +172,7 @@ Every section has an admin-editable **eyebrow** (small red text), **title**, opt
 | BLG-6 | Scheduled posts go live automatically at their publish date | P1 |
 | BLG-7 | Estimated reading time and social share buttons | P2 |
 | BLG-8 | RSS feed | P2 |
+| BLG-9 | Visitors can comment on published posts (name, email, message; one level of replies). Comments are held until the owner approves them; the owner can reply, unapprove and delete, and can close comments per post. CON-4 spam protection applies; emails are never shown publicly | P1 |
 
 ### 5.8 Pricing, testimonials, clients, stats
 
@@ -201,7 +203,7 @@ Every section has an admin-editable **eyebrow** (small red text), **title**, opt
 |---|---|---|
 | ADM-1 | Secure login for the owner only; public registration disabled | P0 |
 | ADM-2 | Dashboard: counts of projects, posts, services, unread messages and subscribers; latest 5 messages; quick links | P0 |
-| ADM-3 | Messages inbox: list, read/unread, filter by source (contact / chat / pricing), view, mark as replied, delete, "reply by email" link | P0 |
+| ADM-3 | Messages inbox: list, read/unread, filter by source (contact / chat / project / pricing), view, mark as replied, delete, "reply by email" link; reply from the inbox: the reply is emailed to the visitor (Reply-To the owner, original quoted) and kept in a thread with its delivery status (sending / sent / failed + retry) | P0 |
 | ADM-4 | All collections support create, edit, delete (with confirmation), active toggle and reordering | P0 |
 | ADM-5 | Image uploads with preview, type and size validation, and automatic resizing to theme ratios | P0 |
 | ADM-6 | Rich-text editor for long content, with sanitized output | P0 |
@@ -234,12 +236,14 @@ Every section has an admin-editable **eyebrow** (small red text), **title**, opt
 | `service_categories` | name, slug, sort_order |
 | `services` | category_id, title, slug, icon, excerpt, content, image, project_count, is_featured, sort_order, is_active, SEO fields |
 | `skills` | icon, title, done_count, description, link, is_highlighted, sort_order, is_active |
+| `skill_bars` | group (design / development), name, percent, sort_order, is_active |
 | `project_categories` | name, slug, sort_order |
 | `projects` | category_id, title, slug, tagline, client_name, project_date, cover_image, card_image, content, features (JSON), external_url, is_featured, status, published_at, sort_order, SEO fields |
 | `project_images` | project_id, path, alt, sort_order |
 | `post_categories` | name, slug |
 | `tags`, `post_tag`, `project_tag` | name, slug; pivot tables |
-| `posts` | category_id, title, slug, excerpt, body, featured_image, author_name, status, published_at, SEO fields |
+| `posts` | category_id, title, slug, excerpt, body, featured_image, author_name, status, published_at, allow_comments, SEO fields |
+| `comments` | post_id, parent_id, author_name, author_email, body, is_owner, status (pending / approved), approved_at, ip_address, user_agent |
 | `pricing_plans` | name, price, currency, period, features (JSON), is_highlighted, button_label, button_url, sort_order, is_active |
 | `testimonials` | quote, name, role, photo, rating, sort_order, is_active |
 | `clients` | name, logo, url, sort_order, is_active |
@@ -291,11 +295,11 @@ The admin panel uses a clean Bootstrap admin layout (sidebar + top bar), kept se
 ## 10. Risks and open questions
 
 1. **Admin panel approach.** This PRD assumes a custom Bootstrap admin panel rather than Filament. Confirm.
-2. **"Appointment Now" button.** Rename to "Send Message", or is appointment booking wanted?
+2. **"Appointment Now" button.** Decided 2026-11-02: renamed to "Send Message"; no appointment booking.
 3. **Pricing plans.** Do plan buttons lead to an enquiry (assumed) or to payment?
 4. **Chat popup.** Treated as an email form, not live chat; the "Online" label will be removed or made editable.
 5. **Skills vs Services.** The two sections are similar. Keep separate tables (assumed) or merge?
-6. **Blog comments.** Out of scope for now; confirm.
+6. **Blog comments.** Decided 2026-10-28: in scope as moderated comments with owner replies (BLG-9).
 7. **Theme licence.** Confirm the Reeni licence allows this use, and replace demo images and company logos with owned or licensed assets.
 8. **Newsletter.** Sign-ups are collected only; sending campaigns would need a service like Mailchimp later.
 9. **Email delivery.** Needs SMTP in production; use Mailpit locally on XAMPP.

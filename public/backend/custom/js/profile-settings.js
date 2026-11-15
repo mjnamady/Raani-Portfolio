@@ -39,6 +39,11 @@ document.addEventListener('DOMContentLoaded', function () {
         input.value = '';
         showImageError('');
         setPreview(preview.dataset.original, false);
+
+        // Clearing the file from JavaScript fires no event, so tell the change tracker.
+        if (window.adminFormTracker) {
+            window.adminFormTracker.refresh();
+        }
     }
 
     if (input && preview) {
