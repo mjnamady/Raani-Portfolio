@@ -1,0 +1,174 @@
+/*
+    Admin profile settings page.
+    Overrides only: the Cork theme files under backend/src stay untouched.
+*/
+
+.profile-settings-card {
+    padding: 25px;
+    background-color: #fff;
+    border-radius: 18px;
+    height: 100%;
+}
+
+.profile-settings-card h5 {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.profile-settings-card .card-subtitle {
+    font-size: 13px;
+    color: #888ea8;
+    margin-bottom: 24px;
+}
+
+.profile-settings-card label {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.profile-settings-card .form-text {
+    font-size: 12px;
+}
+
+/* Avatar preview */
+.ps-avatar-preview {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 16px;
+}
+
+.ps-avatar-preview img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #e0e6ed;
+}
+
+.ps-avatar-preview .ps-avatar-badge {
+    position: absolute;
+    right: 6px;
+    bottom: 6px;
+    display: none;
+}
+
+.ps-avatar-preview.is-new .ps-avatar-badge {
+    display: inline-block;
+}
+
+.ps-avatar-preview.is-new img {
+    border-color: #4361ee;
+}
+
+.ps-summary {
+    text-align: center;
+}
+
+.ps-summary h4 {
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.ps-summary p {
+    margin-bottom: 0;
+    color: #888ea8;
+}
+
+.ps-summary .list-group-item {
+    background: transparent;
+    border: none;
+    padding: 6px 0;
+    text-align: left;
+    font-size: 14px;
+}
+
+.ps-summary .list-group-item svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    vertical-align: text-bottom;
+}
+
+/* Password show/hide toggle, matching the theme's form-action-password pattern */
+.form-action-password {
+    position: relative;
+}
+
+.form-action-password .form-control {
+    padding-right: 48px;
+}
+
+.form-action-password .form-password-toggle {
+    position: absolute;
+    top: 4px;
+    right: 5px;
+    padding: 6px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    cursor: pointer;
+    line-height: 0;
+}
+
+.form-action-password .form-password-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+.form-action-password .form-password-toggle .toggle-hide {
+    display: none;
+}
+
+.form-action-password .form-password-toggle.is-visible .toggle-show {
+    display: none;
+}
+
+.form-action-password .form-password-toggle.is-visible .toggle-hide {
+    display: inline;
+}
+
+.password-rules {
+    padding-left: 0;
+    list-style: none;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.password-rules li {
+    color: #888ea8;
+}
+
+.password-rules li::before {
+    content: "\2022";
+    display: inline-block;
+    width: 14px;
+}
+
+.password-rules li.is-met {
+    color: #00ab55;
+}
+
+.password-rules li.is-met::before {
+    content: "\2713";
+}
+
+/* Dark mode (Cork toggles .dark on body) */
+body.dark .profile-settings-card {
+    background-color: #0e1726;
+}
+
+body.dark .ps-avatar-preview img {
+    border-color: #1b2e4b;
+}
+
+body.dark .ps-avatar-preview.is-new img {
+    border-color: #4361ee;
+}
+
+body.dark .profile-settings-card label,
+body.dark .ps-summary h4,
+body.dark .ps-summary .list-group-item {
+    color: #e0e6ed;
+}
