@@ -21,6 +21,14 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Signed-in users who open a guest page (e.g. /login) go to the admin panel, not the public home page.
         $middleware->redirectUsersTo(fn () => route('admin.dashboard'));
+
+        // Behind a hosting proxy (Railway), read the visitor's IP and https from the X-Forwarded-* headers,
+        // so rate limits are per visitor and links use https. Only set TRUSTED_PROXIES where the app can
+        // be reached through that proxy alone: "*" on Railway, the proxy's IP ranges elsewhere. Unset
+        // (local), the headers are ignored and cannot be used to spoof an IP.
+        if (filled($proxies = env('TRUSTED_PROXIES'))) {
+            $middleware->trustProxies(at: $proxies === '*' ? '*' : array_map('trim', explode(',', $proxies)));
+        }
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

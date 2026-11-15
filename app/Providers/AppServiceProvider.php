@@ -23,6 +23,7 @@ use App\Support\SiteSettings;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -42,6 +43,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Production is only served over https (Railway terminates TLS in front of the app), so every
+        // generated link and asset URL uses https, even if a proxy header is missing.
+        if ($this->app->isProduction()) {
+            URL::forceScheme('https');
+        }
+
         // Each reset route gets its own buckets: per IP, and per target email across IPs.
         RateLimiter::for('password-reset', fn (Request $request) => [
             Limit::perMinute(5)->by($request->path().'|ip|'.$request->ip()),
